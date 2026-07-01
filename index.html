@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ΛDVENTURE EUROPA — Brutal Collection</title>
+<meta name="description" content="Experiencias premium de turismo por Roma, Barcelona, París, Estambul y Madrid con ruta interactiva y presupuesto personalizado.">
+<meta name="theme-color" content="#0c0c0e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://player.vimeo.com">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0c0e'/%3E%3Cpath d='M32 10 53 54h-9l-4-9H24l-4 9h-9L32 10Zm0 18-5 11h10l-5-11Z' fill='%23c62828'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <!-- Preload cover images for super-fast loading -->
 <link rel="preload" href="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80" as="image">
@@ -12,11 +19,13 @@
 <link rel="preload" href="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1600&q=80" as="image">
 <link rel="preload" href="https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1600&q=80" as="image">
 <style>
-:root{--bg:#0c0c0e;--bg2:#121214;--surface:#18181b;--border:#222226;--muted:#6b6b76;--accent:#c62828;--accent2:#8b1a1a;--text:#e8e8ed;--text2:#a0a0ab;--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-serif:'Playfair Display',Georgia,serif}
+:root{--bg:#0c0c0e;--bg2:#121214;--surface:#18181b;--border:#222226;--muted:#8a8a96;--accent:#c62828;--accent2:#8b1a1a;--text:#f2f2f6;--text2:#b7b7c2;--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-serif:'Playfair Display',Georgia,serif;--ease:cubic-bezier(.22,1,.36,1)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;cursor:none}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 ::selection{background:var(--accent);color:#fff}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+button{font-family:inherit}
 
 /* CUSTOM CURSOR */
 .cursor{position:fixed;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:transform .08s linear}
@@ -43,14 +52,16 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--accent);transition:width .4s cubic-bezier(.25,.46,.45,.94)}
 .nav-links a:hover{color:var(--text)}
 .nav-links a:hover::after{width:100%}
-.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:5px;z-index:10001}
+.nav-links a[aria-current="true"]{color:var(--text)}
+.nav-links a[aria-current="true"]::after{width:100%}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:5px;z-index:10001;background:transparent;border:0;color:inherit}
 .nav-toggle span{width:28px;height:1.5px;background:#fff;transition:all .35s;border-radius:2px}
 .nav-toggle.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .nav-toggle.active span:nth-child(2){opacity:0}
 .nav-toggle.active span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
 /* HERO */
-.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg)}
+.hero{height:100vh;height:100dvh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg)}
 .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2070&auto=format&fit=crop') center/cover;opacity:.25;transform:scale(1.05);animation:heroZoom 24s ease infinite alternate}
 .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22;pointer-events:none}
 @keyframes heroZoom{0%{transform:scale(1.05)}100%{transform:scale(1.18)}}
@@ -99,7 +110,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 /* GALLERY DOTS */
 .gallery-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:.5rem;opacity:0;transition:opacity .4s}
 .city-image:hover .gallery-dots{opacity:1}
-.gallery-dots .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:transparent;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none}
+.gallery-dots .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:transparent;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none;padding:0;appearance:none}
 .gallery-dots .dot.active{background:#fff;border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.3)}
 .gallery-dots .dot:hover{background:var(--accent);border-color:var(--accent)}
 
@@ -576,6 +587,8 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .contact button{width:100%;padding:1.2rem;background:var(--accent);color:#fff;border:none;font-size:.82rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .35s;position:relative;overflow:hidden}
 .contact button::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.1) 100%)}
 .contact button:hover{background:var(--accent2);box-shadow:0 16px 32px rgba(198,40,40,.2)}
+.form-status{min-height:1.4rem;margin-top:1rem;color:var(--text2);font-size:.85rem;line-height:1.5}
+.form-status.success{color:#f2f2f6}
 
 /* FOOTER */
 footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);font-weight:300}
@@ -594,14 +607,14 @@ footer .socials a:hover{color:var(--accent)}
 /* MQ */
 @media(max-width:960px){
 nav{padding:1rem 1.5rem;mix-blend-mode:normal!important}
-.nav-links{position:fixed;top:0;right:-100%;width:78%;max-width:340px;height:100vh;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right .55s cubic-bezier(.25,.46,.45,.94);z-index:10000;border-left:1px solid var(--border)}
+.nav-links{position:fixed;top:0;right:-100%;width:78%;max-width:340px;height:100vh;height:100dvh;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right .55s cubic-bezier(.25,.46,.45,.94);z-index:10000;border-left:1px solid var(--border)}
 .nav-links.open{right:0}
   .nav-links a{font-size:.95rem;color:rgba(255,255,255,.85);letter-spacing:.18em;transition:color .4s cubic-bezier(.25,.46,.45,.94),padding-left .4s cubic-bezier(.25,.46,.45,.94)}
   .nav-links a:hover{color:var(--accent)!important;padding-left:8px}
   .nav-links a::after{background:var(--accent);height:2px;bottom:-2px}
   .nav-links a:hover::after{width:60%}
 .nav-toggle{display:flex;cursor:pointer}
-.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;opacity:0;visibility:hidden;transition:all .4s;backdrop-filter:blur(4px)}
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;opacity:0;visibility:hidden;transition:all .4s}
 .nav-overlay.active{opacity:1;visibility:visible}
 nav.nav-open .nav-logo{opacity:0;pointer-events:none}
 .city,.city.reverse{grid-template-columns:1fr;min-height:auto;direction:ltr}
@@ -627,6 +640,14 @@ nav{padding:.8rem 1.2rem}
 .city-stat span:first-child{font-size:1.4rem}
 .contact{padding:4rem 1.2rem}
 footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
+}
+@media (hover:none),(pointer:coarse){
+  html,body,a,button,input,textarea,.btn-city,.btn-primary,.btn-outline,.gallery-arrow,.dot,.nav-toggle{cursor:auto}
+  .cursor{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  .hero-bg,.gallery-track{transform:none!important}
 }
 </style>
 </head>
@@ -655,9 +676,9 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <li><a href="#calculadora">Presupuesto</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
-  <div class="nav-toggle" id="navToggle">
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú" aria-controls="navLinks" aria-expanded="false">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 <div class="nav-overlay" id="navOverlay"></div>
 
@@ -1019,15 +1040,16 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="section-label reveal" style="justify-content:center">Contacto</div>
     <h2 class="reveal reveal-delay-1">Reserva tu aventura</h2>
     <p class="sub reveal reveal-delay-2">Déjanos tus datos y te diseñaremos un viaje brutal y personalizado por Europa.</p>
-    <form class="reveal reveal-delay-3">
+    <form class="reveal reveal-delay-3" id="contactForm">
       <div class="contact-grid">
-        <input type="text" placeholder="Nombre completo" required>
-        <input type="email" placeholder="Email" required>
-        <input type="tel" placeholder="Teléfono">
-        <input type="text" placeholder="Ciudad de interés" id="contactCity">
-        <textarea placeholder="Cuéntanos sobre tu aventura ideal..." id="contactMessage"></textarea>
+        <input type="text" name="name" aria-label="Nombre completo" autocomplete="name" placeholder="Nombre completo" required>
+        <input type="email" name="email" aria-label="Email" autocomplete="email" placeholder="Email" required>
+        <input type="tel" name="phone" aria-label="Teléfono" autocomplete="tel" placeholder="Teléfono">
+        <input type="text" name="city" aria-label="Ciudad de interés" autocomplete="address-level2" placeholder="Ciudad de interés" id="contactCity">
+        <textarea name="message" aria-label="Aventura ideal" placeholder="Cuéntanos sobre tu aventura ideal..." id="contactMessage"></textarea>
       </div>
       <button type="submit">Enviar solicitud</button>
+      <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
     </form>
   </div>
 </section>
@@ -1091,11 +1113,15 @@ function initGalleries(){
       const img=document.createElement('img')
       img.className='gallery-img'+(i===0?' active':'')
       img.src=src
-      img.alt=key+' '+i
-      img.loading='lazy'
+      img.alt=`Vista de ${key} ${i+1}`
+      img.loading=i===0?'eager':'lazy'
+      img.decoding='async'
       track.appendChild(img)
 
-      const dot=document.createElement('div')
+      const dot=document.createElement('button')
+      dot.type='button'
+      dot.setAttribute('aria-label',`Ver imagen ${i+1} de ${key}`)
+      dot.setAttribute('aria-pressed',String(i===0))
       dot.className='dot'+(i===0?' active':'')
       dot.addEventListener('click',e=>{e.stopPropagation();goTo(i)})
       dots.appendChild(dot)
@@ -1110,9 +1136,11 @@ function initGalleries(){
       const allDots=dots.querySelectorAll('.dot')
       all[current].classList.remove('active')
       allDots[current].classList.remove('active')
+      allDots[current].setAttribute('aria-pressed','false')
       current=idx
       all[current].classList.add('active')
       allDots[current].classList.add('active')
+      allDots[current].setAttribute('aria-pressed','true')
     }
 
     prev.addEventListener('click',e=>{e.stopPropagation();goTo(current===0?imgs.length-1:current-1)})
@@ -1128,26 +1156,45 @@ window.addEventListener('load',()=>{
 // NAV SCROLL
 const nav=document.getElementById('navbar')
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80))
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const finePointer=window.matchMedia('(hover: hover) and (pointer: fine)').matches
 
 // MOBILE NAV
 const navToggle=document.getElementById('navToggle')
 const navLinks=document.getElementById('navLinks')
 const navOverlay=document.getElementById('navOverlay')
 function toggleNav(){
-  navLinks.classList.toggle('open')
-  navToggle.classList.toggle('active')
-  navOverlay.classList.toggle('active')
-  nav.classList.toggle('nav-open')
+  const isOpen=navLinks.classList.toggle('open')
+  navToggle.classList.toggle('active',isOpen)
+  navOverlay.classList.toggle('active',isOpen)
+  nav.classList.toggle('nav-open',isOpen)
+  navToggle.setAttribute('aria-expanded',String(isOpen))
+  navToggle.setAttribute('aria-label',isOpen?'Cerrar menú':'Abrir menú')
 }
 function closeNav(){
   navLinks.classList.remove('open')
   navToggle.classList.remove('active')
   navOverlay.classList.remove('active')
   nav.classList.remove('nav-open')
+  navToggle.setAttribute('aria-expanded','false')
+  navToggle.setAttribute('aria-label','Abrir menú')
 }
 navToggle.addEventListener('click',toggleNav)
 navOverlay.addEventListener('click',closeNav)
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',closeNav))
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeNav()})
+
+// SCROLLSPY
+const navAnchors=[...document.querySelectorAll('.nav-links a[href^="#"]')]
+const linkedSections=navAnchors.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean)
+const spyObserver=new IntersectionObserver(entries=>{
+  const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0]
+  if(!visible)return
+  navAnchors.forEach(a=>a.removeAttribute('aria-current'))
+  const active=navAnchors.find(a=>a.getAttribute('href')==='#'+visible.target.id)
+  if(active)active.setAttribute('aria-current','true')
+},{threshold:[.25,.45,.65],rootMargin:'-25% 0px -45% 0px'})
+linkedSections.forEach(section=>spyObserver.observe(section))
 
 // REVEAL ON SCROLL
 const observer=new IntersectionObserver(entries=>{
@@ -1160,22 +1207,26 @@ document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
 // CUSTOM CURSOR
 const cursor=document.getElementById('cursor')
 const ring=document.getElementById('cursorRing')
-let mx=0,my=0,cx=0,cy=0
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY})
-function animateCursor(){
-  cx+=(mx-cx)*.18;cy+=(my-cy)*.18
-  cursor.style.transform=`translate(${cx}px,${cy}px)`
-  requestAnimationFrame(animateCursor)
+if(cursor && ring && finePointer && !reduceMotion){
+  let mx=window.innerWidth/2,my=window.innerHeight/2,cx=mx,cy=my
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY},{passive:true})
+  function animateCursor(){
+    cx+=(mx-cx)*.18;cy+=(my-cy)*.18
+    cursor.style.transform=`translate(${cx}px,${cy}px)`
+    requestAnimationFrame(animateCursor)
+  }
+  animateCursor()
+  document.querySelectorAll('a,button,input,textarea,.btn-city,.btn-primary,.btn-outline,nav,.city-image,.nav-toggle,.gallery-arrow,.dot').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hover'))
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))
+  })
+}else if(cursor){
+  cursor.style.display='none'
 }
-animateCursor()
-document.querySelectorAll('a,button,input,textarea,.btn-city,.btn-primary,.btn-outline,nav,.city-image,.nav-toggle,.gallery-arrow,.dot').forEach(el=>{
-  el.addEventListener('mouseenter',()=>ring.classList.add('hover'))
-  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))
-})
 
 // SPOTLIGHT
 const spotlight=document.getElementById('heroSpotlight')
-if(spotlight){
+if(spotlight && finePointer && !reduceMotion){
   document.querySelector('.hero').addEventListener('mousemove',e=>{
     const r=e.currentTarget.getBoundingClientRect()
     const x=((e.clientX-r.left)/r.width)*100
@@ -1206,6 +1257,7 @@ function initClocks(){
 
 // PARALLAX
 function initParallax(){
+  if(reduceMotion || !finePointer)return
   const cities = document.querySelectorAll('.city');
   let ticking = false;
 
@@ -1301,6 +1353,8 @@ function initCalculator(){
   const contactMessageInput = document.getElementById('contactMessage');
   
   if (!slider || !priceDisplay) return;
+  cityBtns.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.classList.contains('active'))));
+  luxuryBtns.forEach(btn=>btn.setAttribute('aria-pressed',String(btn.classList.contains('active'))));
 
   let activeCity = "roma";
   let activeLuxury = "brutal";
@@ -1367,6 +1421,11 @@ function initCalculator(){
   }
   
   function animatePrice(targetPrice) {
+    if(reduceMotion){
+      currentPrice=targetPrice;
+      priceDisplay.innerHTML = `${currentPrice.toLocaleString('es-ES')}<span>€</span>`;
+      return;
+    }
     const duration = 400; // ms
     const startTime = performance.now();
     const startPrice = currentPrice;
@@ -1405,8 +1464,12 @@ function initCalculator(){
 
   cityBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      cityBtns.forEach(b => b.classList.remove('active'));
+      cityBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed','false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed','true');
       activeCity = btn.dataset.city;
       updateUI();
     });
@@ -1414,8 +1477,12 @@ function initCalculator(){
 
   luxuryBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      luxuryBtns.forEach(b => b.classList.remove('active'));
+      luxuryBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed','false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed','true');
       activeLuxury = btn.dataset.luxury;
       updateUI();
     });
@@ -1426,13 +1493,14 @@ function initCalculator(){
     updateUI();
   });
 
-  submitBtn.addEventListener('click', () => {
+  submitBtn?.addEventListener('click', () => {
     if (contactCityInput && contactMessageInput) {
       const cityName = cityNames[activeCity];
       const luxuryLabel = luxuryNames[activeLuxury];
+      const finalPrice = calculatePrice();
       
       contactCityInput.value = cityName;
-      contactMessageInput.value = `Hola, me interesa reservar la experiencia personalizada en ${cityName} por ${activeDays} días con nivel ${luxuryLabel}. Presupuesto estimado: ${currentPrice.toLocaleString('es-ES')}€. Por favor, contáctenme para diseñar la ruta.`;
+      contactMessageInput.value = `Hola, me interesa reservar la experiencia personalizada en ${cityName} por ${activeDays} días con nivel ${luxuryLabel}. Presupuesto estimado: ${finalPrice.toLocaleString('es-ES')}€. Por favor, contáctenme para diseñar la ruta.`;
       
       const contactSec = document.getElementById('contacto');
       if (contactSec) {
@@ -1443,6 +1511,25 @@ function initCalculator(){
   });
 
   updateUI();
+}
+
+// CONTACT FORM
+function initContactForm(){
+  const form=document.getElementById('contactForm');
+  const status=document.getElementById('formStatus');
+  if(!form)return;
+  form.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    if(status){
+      status.textContent='Solicitud preparada. Te contactaremos para cerrar los detalles de la aventura.';
+      status.classList.add('success');
+    }
+    form.querySelector('button[type="submit"]')?.blur();
+  });
 }
 
 // HERO VIDEO FALLBACK CONTROLLER
@@ -1456,14 +1543,20 @@ function initHeroVideo(){
       fallback.style.opacity = '0';
     };
 
-    // Programmatic play trigger to handle autoplay policy and resolve race condition
-    video.play().then(() => {
-      fadeOut();
-    }).catch(err => {
-      console.log("Autoplay blocked or delayed, using image fallback:", err);
-      // Keep static image visible if autoplay fails
+    if(reduceMotion){
+      video.removeAttribute('autoplay');
+      video.pause();
       fallback.style.opacity = '0.25';
-    });
+      return;
+    }
+
+    const playPromise = video.play();
+    if(playPromise && typeof playPromise.then==='function'){
+      playPromise.then(fadeOut).catch(err => {
+        console.log("Autoplay blocked or delayed, using image fallback:", err);
+        fallback.style.opacity = '0.25';
+      });
+    }
 
     // Event listeners as secondary fallback triggers
     video.addEventListener('playing', fadeOut);
@@ -1478,6 +1571,7 @@ initClocks()
 initParallax()
 initInteractiveMap()
 initCalculator()
+initContactForm()
 initHeroVideo()
 </script>
 </body>
