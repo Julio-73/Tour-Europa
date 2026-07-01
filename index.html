@@ -52,6 +52,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 /* HERO */
 .hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg)}
 .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2070&auto=format&fit=crop') center/cover;opacity:.25;transform:scale(1.05);animation:heroZoom 24s ease infinite alternate}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.22;pointer-events:none}
 @keyframes heroZoom{0%{transform:scale(1.05)}100%{transform:scale(1.18)}}
 .hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(198,40,40,.15) 0%,transparent 65%),linear-gradient(180deg,transparent 0%,var(--bg) 100%)}
 .hero-spotlight{position:absolute;inset:0;pointer-events:none;opacity:.5;transition:opacity .3s}
@@ -283,6 +284,284 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
   .tooltip-content p{margin-bottom: 0.5rem; font-size: 0.65rem}
 }
 
+/* CALCULATOR SECTION */
+.calc-section{
+  padding: 6rem 3rem;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.calc-section h2{
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.calc-section p.sub{
+  color: var(--text2);
+  max-width: 580px;
+  line-height: 1.7;
+  font-weight: 300;
+  font-size: 0.92rem;
+}
+.calc-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3.5rem;
+  width: 100%;
+  max-width: 1000px;
+  margin-top: 4rem;
+  text-align: left;
+}
+.calc-controls{
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+.calc-group{
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.calc-group label{
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+.calc-cities-grid{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+}
+.calc-city-btn{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  padding: 0.9rem 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s cubic-bezier(.25,.46,.45,.94);
+  text-align: center;
+}
+.calc-city-btn:hover{
+  border-color: rgba(255,255,255,0.2);
+  color: var(--text);
+  background: rgba(255,255,255,0.02);
+}
+.calc-city-btn.active{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(198,40,40,0.25);
+}
+
+.calc-range-wrapper{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.9rem 1.2rem;
+}
+.calc-days-value{
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: monospace;
+}
+.calc-slider{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 70%;
+  height: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: none;
+}
+.calc-slider::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: none;
+  transition: transform 0.2s;
+}
+.calc-slider::-webkit-slider-thumb:hover{
+  transform: scale(1.3);
+}
+
+.calc-luxury-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.calc-luxury-btn{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1.1rem;
+  cursor: none;
+  transition: all 0.3s cubic-bezier(.25,.46,.45,.94);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.calc-luxury-btn h4{
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text);
+  letter-spacing: 0.1em;
+}
+.calc-luxury-btn p{
+  font-size: 0.65rem;
+  color: var(--muted);
+  line-height: 1.4;
+  font-weight: 300;
+}
+.calc-luxury-btn:hover{
+  border-color: rgba(255,255,255,0.2);
+}
+.calc-luxury-btn.active{
+  border-color: var(--accent);
+  background: rgba(198,40,40,0.04);
+}
+
+.calc-card{
+  background: rgba(24, 24, 27, 0.4);
+  border: 1px solid var(--border);
+  padding: 2.2rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.calc-card::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent);
+}
+.calc-summary-title{
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+.calc-summary-desc{
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-top: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.calc-price-wrap{
+  margin: 2rem 0;
+}
+.calc-price-label{
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.calc-price{
+  font-size: 3.6rem;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-top: 0.4rem;
+}
+.calc-price span{
+  font-size: 1.8rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 0.2rem;
+}
+.calc-perks-title{
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+.calc-perks-list{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 2rem;
+}
+.calc-perks-list li{
+  font-size: 0.75rem;
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 300;
+}
+.calc-perks-list li::before{
+  content: '✓';
+  color: var(--accent);
+  font-weight: 700;
+}
+.btn-calc-submit{
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 1.15rem;
+  width: 100%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: none;
+  transition: all 0.3s;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.btn-calc-submit::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 100%);
+}
+.btn-calc-submit:hover{
+  background: var(--accent2);
+  box-shadow: 0 16px 32px rgba(198,40,40,0.25);
+  transform: translateY(-2px);
+}
+
+@media(max-width:960px){
+  .calc-section{padding: 4rem 1.5rem}
+  .calc-grid{grid-template-columns: 1fr; gap: 2.5rem; margin-top: 2rem}
+  .calc-cities-grid{grid-template-columns: repeat(3, 1fr)}
+  .calc-luxury-grid{grid-template-columns: 1fr}
+  .calc-card{padding: 1.8rem}
+  .calc-price{font-size: 2.8rem}
+}
+
 /* CONTACT */
 .contact{min-height:80vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:6rem 2rem;position:relative;overflow:hidden}
 .contact::before{content:'CONTACT';position:absolute;font-size:clamp(6rem,22vw,22rem);font-weight:900;color:rgba(255,255,255,.015);top:50%;left:50%;transform:translate(-50%,-50%);letter-spacing:-.06em;pointer-events:none;white-space:nowrap;font-family:var(--font-serif);font-style:italic}
@@ -373,6 +652,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <li><a href="#paris">París</a></li>
     <li><a href="#istanbul">Estambul</a></li>
     <li><a href="#madrid">Madrid</a></li>
+    <li><a href="#calculadora">Presupuesto</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
   <div class="nav-toggle" id="navToggle">
@@ -383,6 +663,9 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <section class="hero">
   <div class="hero-bg"></div>
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-colosseum-in-rome-italy-42630-large.mp4" type="video/mp4">
+  </video>
   <div class="hero-overlay"></div>
   <div class="hero-spotlight" id="heroSpotlight"></div>
   <div class="hero-content">
@@ -660,6 +943,77 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
   </div>
 </section>
 
+<section id="calculadora" class="calc-section">
+  <div class="section-label reveal">Presupuesto · Calculadora</div>
+  <h2 class="reveal reveal-delay-1">Diseña tu Aventura</h2>
+  <p class="sub reveal reveal-delay-2">Personaliza los detalles de tu expedición y calcula un presupuesto estimado en tiempo real con sus beneficios exclusivos.</p>
+  
+  <div class="calc-grid reveal reveal-delay-3">
+    <!-- Controls (Left) -->
+    <div class="calc-controls">
+      <!-- City Select -->
+      <div class="calc-group">
+        <label>1. Elige tu destino</label>
+        <div class="calc-cities-grid">
+          <button type="button" class="calc-city-btn active" data-city="roma">Roma</button>
+          <button type="button" class="calc-city-btn" data-city="barcelona">Barcelona</button>
+          <button type="button" class="calc-city-btn" data-city="paris">París</button>
+          <button type="button" class="calc-city-btn" data-city="istanbul">Estambul</button>
+          <button type="button" class="calc-city-btn" data-city="madrid">Madrid</button>
+        </div>
+      </div>
+      
+      <!-- Days Slider -->
+      <div class="calc-group">
+        <label>2. Duración de la expedición</label>
+        <div class="calc-range-wrapper">
+          <input type="range" id="calcSlider" min="3" max="21" value="7" class="calc-slider">
+          <span class="calc-days-value" id="calcDaysVal">7 días</span>
+        </div>
+      </div>
+      
+      <!-- Luxury Level -->
+      <div class="calc-group">
+        <label>3. Nivel de Experiencia</label>
+        <div class="calc-luxury-grid">
+          <button type="button" class="calc-luxury-btn" data-luxury="aventura">
+            <h4>Aventura</h4>
+            <p>Hoteles boutique, transportes locales selectos y guías nativos.</p>
+          </button>
+          <button type="button" class="calc-luxury-btn active" data-luxury="brutal">
+            <h4>Brutal</h4>
+            <p>Hoteles 5★, transportes todoterreno privados y experiencias VIP sin filas.</p>
+          </button>
+          <button type="button" class="calc-luxury-btn" data-luxury="epico">
+            <h4>Épico</h4>
+            <p>Villas de lujo, yate/helicóptero y asistente personal 24/7.</p>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Results Card (Right) -->
+    <div class="calc-card">
+      <div>
+        <div class="calc-summary-title">Resumen de Expedición</div>
+        <div class="calc-summary-desc" id="calcSummaryDesc">Roma · 7 Días · Nivel Brutal</div>
+        
+        <div class="calc-price-wrap">
+          <div class="calc-price-label">Presupuesto Estimado</div>
+          <div class="calc-price" id="calcPriceDisplay">0<span>€</span></div>
+        </div>
+        
+        <div class="calc-perks-title">Beneficios Incluidos</div>
+        <ul class="calc-perks-list" id="calcPerksList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+      
+      <button type="button" class="btn-calc-submit" id="calcSubmitBtn">Solicitar Reserva →</button>
+    </div>
+  </div>
+</section>
+
 <section id="contacto" class="contact">
   <div class="contact-inner">
     <div class="section-label reveal" style="justify-content:center">Contacto</div>
@@ -670,8 +1024,8 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
         <input type="text" placeholder="Nombre completo" required>
         <input type="email" placeholder="Email" required>
         <input type="tel" placeholder="Teléfono">
-        <input type="text" placeholder="Ciudad de interés">
-        <textarea placeholder="Cuéntanos sobre tu aventura ideal..."></textarea>
+        <input type="text" placeholder="Ciudad de interés" id="contactCity">
+        <textarea placeholder="Cuéntanos sobre tu aventura ideal..." id="contactMessage"></textarea>
       </div>
       <button type="submit">Enviar solicitud</button>
     </form>
@@ -932,11 +1286,171 @@ function initInteractiveMap(){
   });
 }
 
+// BUDGET CALCULATOR
+function initCalculator(){
+  const cityBtns = document.querySelectorAll('.calc-city-btn');
+  const luxuryBtns = document.querySelectorAll('.calc-luxury-btn');
+  const slider = document.getElementById('calcSlider');
+  const daysValue = document.getElementById('calcDaysVal');
+  const summaryDesc = document.getElementById('calcSummaryDesc');
+  const priceDisplay = document.getElementById('calcPriceDisplay');
+  const perksList = document.getElementById('calcPerksList');
+  const submitBtn = document.getElementById('calcSubmitBtn');
+  
+  const contactCityInput = document.getElementById('contactCity');
+  const contactMessageInput = document.getElementById('contactMessage');
+  
+  if (!slider || !priceDisplay) return;
+
+  let activeCity = "roma";
+  let activeLuxury = "brutal";
+  let activeDays = 7;
+  
+  const basePrices = {
+    roma: 180,
+    barcelona: 160,
+    paris: 210,
+    istanbul: 140,
+    madrid: 170
+  };
+  
+  const cityNames = {
+    roma: "Roma",
+    barcelona: "Barcelona",
+    paris: "París",
+    istanbul: "Estambul",
+    madrid: "Madrid"
+  };
+  
+  const luxuryMultipliers = {
+    aventura: 1.0,
+    brutal: 1.8,
+    epico: 3.5
+  };
+  
+  const luxuryNames = {
+    aventura: "Aventura",
+    brutal: "Brutal",
+    epico: "Épico"
+  };
+  
+  const perks = {
+    aventura: [
+      "Alojamiento selecto en Hoteles Boutique",
+      "Guías locales experimentados en cada destino",
+      "Traslados terrestres estándar incluidos",
+      "Seguro de asistencia médica y de viaje completo"
+    ],
+    brutal: [
+      "Hoteles 5★ de diseño con ubicaciones premium",
+      "Guía privado VIP exclusivo para tu grupo",
+      "Vehículos todoterreno privados para traslados",
+      "Cena gastronómica privada en terrazas exclusivas",
+      "Pases VIP rápidos sin colas en monumentos principales"
+    ],
+    epico: [
+      "Estancias de ultra-lujo en Penthouses y Villas privadas",
+      "Traslados en Helicóptero y Yates privados incluidos",
+      "Acceso privado y visitas exclusivas fuera de horario",
+      "Asistente personal y mayordomo de viaje 24/7",
+      "Experiencias personalizadas a medida de nivel Royal"
+    ]
+  };
+
+  let currentPrice = 0;
+  
+  function calculatePrice(){
+    const base = basePrices[activeCity];
+    const multiplier = luxuryMultipliers[activeLuxury];
+    const total = (base * activeDays) * multiplier;
+    return Math.round(total);
+  }
+  
+  function animatePrice(targetPrice) {
+    const duration = 400; // ms
+    const startTime = performance.now();
+    const startPrice = currentPrice;
+    
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      currentPrice = Math.round(startPrice + (targetPrice - startPrice) * ease);
+      priceDisplay.innerHTML = `${currentPrice.toLocaleString('es-ES')}<span>€</span>`;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    requestAnimationFrame(update);
+  }
+
+  function updateUI(){
+    daysValue.textContent = `${activeDays} días`;
+    
+    const luxuryLabel = luxuryNames[activeLuxury];
+    const cityName = cityNames[activeCity];
+    summaryDesc.textContent = `${cityName} · ${activeDays} Días · Nivel ${luxuryLabel}`;
+    
+    const targetVal = calculatePrice();
+    animatePrice(targetVal);
+    
+    perksList.innerHTML = "";
+    perks[activeLuxury].forEach(perk => {
+      const li = document.createElement('li');
+      li.textContent = perk;
+      perksList.appendChild(li);
+    });
+  }
+
+  cityBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      cityBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCity = btn.dataset.city;
+      updateUI();
+    });
+  });
+
+  luxuryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      luxuryBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeLuxury = btn.dataset.luxury;
+      updateUI();
+    });
+  });
+
+  slider.addEventListener('input', (e) => {
+    activeDays = parseInt(e.target.value);
+    updateUI();
+  });
+
+  submitBtn.addEventListener('click', () => {
+    if (contactCityInput && contactMessageInput) {
+      const cityName = cityNames[activeCity];
+      const luxuryLabel = luxuryNames[activeLuxury];
+      
+      contactCityInput.value = cityName;
+      contactMessageInput.value = `Hola, me interesa reservar la experiencia personalizada en ${cityName} por ${activeDays} días con nivel ${luxuryLabel}. Presupuesto estimado: ${currentPrice.toLocaleString('es-ES')}€. Por favor, contáctenme para diseñar la ruta.`;
+      
+      const contactSec = document.getElementById('contacto');
+      if (contactSec) {
+        contactSec.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => contactCityInput.focus(), 800);
+      }
+    }
+  });
+
+  updateUI();
+}
+
 // BOOT
 initGalleries()
 initClocks()
 initParallax()
 initInteractiveMap()
+initCalculator()
 </script>
 </body>
 </html>
