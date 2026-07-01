@@ -76,10 +76,9 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .city.reverse{grid-template-columns:.9fr 1.1fr;direction:rtl}
 .city.reverse .city-content{direction:ltr}
 .city-image{position:relative;overflow:hidden;min-height:70vh}
-.city-image .gallery-track{position:absolute;inset:0}
-.city-image .gallery-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s cubic-bezier(.25,.46,.45,.94),transform 1.4s cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform;transform:scale(1)}
-.city-image .gallery-img.active{opacity:1;z-index:1}
-.city-image:hover .gallery-img.active{transform:scale(1.05)}
+.city-image .gallery-track{position:absolute;top:-7.5%;left:0;width:100%;height:115%;will-change:transform}
+.city-image .gallery-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s cubic-bezier(.25,.46,.45,.94);will-change:opacity}
+.city-image .gallery-img.active{opacity:1;z-index:1;animation:kenBurns 24s ease-out infinite alternate}
 .city-image::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(198,40,40,.18),transparent 55%);pointer-events:none;z-index:2}
 .city-image .img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg2) 0%,transparent 30%,transparent 70%,var(--bg2) 100%);pointer-events:none;opacity:.4;z-index:2}
 
@@ -108,6 +107,175 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .city-stat span:last-child{font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.35rem;display:block}
 .btn-city{display:inline-flex;align-items:center;gap:.6rem;color:var(--text);text-decoration:none;font-weight:600;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border-bottom:2px solid var(--accent);padding-bottom:.35rem;cursor:none}
 .btn-city:hover{gap:1.2rem;color:var(--accent);border-bottom-color:var(--accent2)}
+.city-time{margin-left:auto;font-family:monospace;letter-spacing:0.1em;color:var(--muted);font-size:0.65rem;font-weight:400}
+.city-coordinates{position:absolute;top:1.5rem;left:1.5rem;z-index:3;font-size:0.62rem;letter-spacing:0.22em;color:rgba(255,255,255,0.5);font-family:monospace;background:rgba(12,12,14,0.55);padding:0.4rem 0.8rem;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.06);pointer-events:none}
+@keyframes kenBurns{
+  0%{transform:scale(1.02) translate(0,0)}
+  100%{transform:scale(1.12) translate(-1%,-1%)}
+}
+
+/* MAP SECTION */
+.map-section{
+  padding: 6rem 3rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.map-section h2{
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.map-section p{
+  color: var(--text2);
+  max-width: 580px;
+  line-height: 1.7;
+  font-weight: 300;
+  font-size: 0.92rem;
+}
+.map-container{
+  position: relative;
+  width: 100%;
+  max-width: 860px;
+  margin: 3.5rem auto 0;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  padding: 1rem;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.europe-map{
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.map-grid-line{
+  stroke: rgba(255,255,255,0.02);
+  stroke-width: 1;
+}
+.map-bg-node{
+  fill: rgba(255,255,255,0.12);
+  transition: fill 0.3s;
+}
+.map-bg-link{
+  stroke: rgba(255,255,255,0.04);
+  stroke-width: 0.6;
+}
+.route-path{
+  stroke: var(--accent);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 8, 8;
+  filter: drop-shadow(0 0 4px rgba(198,40,40,0.4));
+  animation: dashOffset 20s linear infinite;
+}
+@keyframes dashOffset{
+  0%{stroke-dashoffset: 160}
+  100%{stroke-dashoffset: 0}
+}
+.pulse-ring{
+  animation: pulseScale 2s ease-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes pulseScale{
+  0%{transform: scale(0.6); opacity: 1}
+  100%{transform: scale(1.6); opacity: 0}
+}
+.map-node-dot{
+  fill: #fff;
+  filter: drop-shadow(0 0 3px #fff);
+  cursor: none;
+}
+.map-node-trigger{
+  cursor: none;
+}
+.map-node-label{
+  font-size: 0.62rem;
+  fill: var(--muted);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  pointer-events: none;
+  transition: fill 0.3s;
+}
+.map-node-trigger:hover ~ .map-node-label{
+  fill: var(--text);
+}
+.map-node-trigger:hover ~ .map-node-dot{
+  fill: var(--accent);
+}
+.map-tooltip{
+  position: absolute;
+  z-index: 100;
+  background: rgba(12, 12, 14, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(.25,.46,.45,.94), transform 0.3s cubic-bezier(.25,.46,.45,.94);
+  transform: translate(-50%, -100%) translateY(-15px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.6);
+  text-align: left;
+}
+.map-tooltip.active{
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -100%) translateY(-5px);
+}
+.tooltip-img{
+  width: 100%;
+  height: 105px;
+  object-fit: cover;
+  border-bottom: 1px solid var(--border);
+}
+.tooltip-content{
+  padding: 0.85rem;
+}
+.tooltip-content h4{
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.05em;
+}
+.tooltip-content p{
+  font-size: 0.7rem;
+  color: var(--text2);
+  margin-bottom: 0.75rem;
+  line-height: 1.45;
+  font-weight: 300;
+}
+.tooltip-action{
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media(max-width:960px){
+  .map-section{padding: 4rem 1.5rem}
+  .map-container{margin-top: 2rem; padding: 0.5rem}
+  .map-node-label{font-size: 0.55rem}
+  .map-tooltip{width: 180px}
+  .tooltip-img{height: 80px}
+  .tooltip-content{padding: 0.65rem}
+  .tooltip-content p{margin-bottom: 0.5rem; font-size: 0.65rem}
+}
 
 /* CONTACT */
 .contact{min-height:80vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:6rem 2rem;position:relative;overflow:hidden}
@@ -193,10 +361,11 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 <nav id="navbar">
   <a href="#" class="nav-logo">ΛD<em>V</em>ENTURE</a>
   <ul class="nav-links" id="navLinks">
+    <li><a href="#ruta">Ruta</a></li>
     <li><a href="#roma">Roma</a></li>
     <li><a href="#barcelona">Barcelona</a></li>
-    <li><a href="#paris">Paris</a></li>
-    <li><a href="#istanbul">Istanbul</a></li>
+    <li><a href="#paris">París</a></li>
+    <li><a href="#istanbul">Estambul</a></li>
     <li><a href="#madrid">Madrid</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
@@ -228,8 +397,151 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
   </div>
 </section>
 
+<section id="ruta" class="map-section">
+  <div class="section-label reveal">La Ruta · Mapa Interactivo</div>
+  <h2 class="reveal reveal-delay-1">El Viaje Salvaje</h2>
+  <p class="reveal reveal-delay-2">Sigue el itinerario diseñado a través de las cinco ciudades más brutales del continente. Pasa el cursor sobre cada nodo para previsualizar los detalles y haz clic para viajar directamente a su sección.</p>
+  
+  <div class="map-container reveal reveal-delay-3">
+    <svg viewBox="0 0 800 480" class="europe-map">
+      <!-- Grid lines -->
+      <line x1="0" y1="80" x2="800" y2="80" class="map-grid-line" />
+      <line x1="0" y1="160" x2="800" y2="160" class="map-grid-line" />
+      <line x1="0" y1="240" x2="800" y2="240" class="map-grid-line" />
+      <line x1="0" y1="320" x2="800" y2="320" class="map-grid-line" />
+      <line x1="0" y1="400" x2="800" y2="400" class="map-grid-line" />
+      <line x1="100" y1="0" x2="100" y2="480" class="map-grid-line" />
+      <line x1="200" y1="0" x2="200" y2="480" class="map-grid-line" />
+      <line x1="300" y1="0" x2="300" y2="480" class="map-grid-line" />
+      <line x1="400" y1="0" x2="400" y2="480" class="map-grid-line" />
+      <line x1="500" y1="0" x2="500" y2="480" class="map-grid-line" />
+      <line x1="600" y1="0" x2="600" y2="480" class="map-grid-line" />
+      <line x1="700" y1="0" x2="700" y2="480" class="map-grid-line" />
+      
+      <!-- Constellation links -->
+      <line x1="100" y1="380" x2="180" y2="360" class="map-bg-link" />
+      <line x1="100" y1="380" x2="160" y2="420" class="map-bg-link" />
+      <line x1="180" y1="360" x2="160" y2="420" class="map-bg-link" />
+      <line x1="180" y1="360" x2="270" y2="340" class="map-bg-link" />
+      <line x1="160" y1="420" x2="260" y2="450" class="map-bg-link" />
+      <line x1="270" y1="340" x2="310" y2="230" class="map-bg-link" />
+      <line x1="310" y1="230" x2="270" y2="170" class="map-bg-link" />
+      <line x1="270" y1="170" x2="200" y2="140" class="map-bg-link" />
+      <line x1="200" y1="140" x2="250" y2="90" class="map-bg-link" />
+      <line x1="270" y1="170" x2="330" y2="170" class="map-bg-link" />
+      <line x1="310" y1="230" x2="330" y2="170" class="map-bg-link" />
+      <line x1="330" y1="170" x2="390" y2="220" class="map-bg-link" />
+      <line x1="390" y1="220" x2="440" y2="180" class="map-bg-link" />
+      <line x1="390" y1="220" x2="450" y2="220" class="map-bg-link" />
+      <line x1="450" y1="220" x2="440" y2="180" class="map-bg-link" />
+      <line x1="440" y1="180" x2="440" y2="120" class="map-bg-link" />
+      <line x1="440" y1="120" x2="500" y2="70" class="map-bg-link" />
+      <line x1="440" y1="120" x2="440" y2="60" class="map-bg-link" />
+      <line x1="500" y1="70" x2="580" y2="50" class="map-bg-link" />
+      <line x1="580" y1="50" x2="680" y2="50" class="map-bg-link" />
+      <line x1="270" y1="340" x2="450" y2="320" class="map-bg-link" />
+      <line x1="310" y1="230" x2="450" y2="320" class="map-bg-link" />
+      <line x1="450" y1="320" x2="470" y2="350" class="map-bg-link" />
+      <line x1="470" y1="350" x2="460" y2="390" class="map-bg-link" />
+      <line x1="450" y1="320" x2="480" y2="240" class="map-bg-link" />
+      <line x1="480" y1="240" x2="520" y2="240" class="map-bg-link" />
+      <line x1="520" y1="240" x2="540" y2="180" class="map-bg-link" />
+      <line x1="540" y1="180" x2="660" y2="200" class="map-bg-link" />
+      <line x1="660" y1="200" x2="680" y2="330" class="map-bg-link" />
+      <line x1="520" y1="240" x2="580" y2="310" class="map-bg-link" />
+      <line x1="580" y1="310" x2="570" y2="410" class="map-bg-link" />
+      <line x1="580" y1="310" x2="680" y2="330" class="map-bg-link" />
+      <line x1="680" y1="330" x2="750" y2="350" class="map-bg-link" />
+      <line x1="260" y1="450" x2="400" y2="460" class="map-bg-link" />
+      <line x1="400" y1="460" x2="460" y2="390" class="map-bg-link" />
+      <line x1="460" y1="390" x2="570" y2="410" class="map-bg-link" />
+      
+      <!-- Constellation nodes -->
+      <circle cx="100" cy="380" r="2" class="map-bg-node" />
+      <circle cx="160" cy="420" r="2" class="map-bg-node" />
+      <circle cx="270" cy="170" r="2" class="map-bg-node" />
+      <circle cx="200" cy="140" r="2" class="map-bg-node" />
+      <circle cx="250" cy="90" r="2" class="map-bg-node" />
+      <circle cx="330" cy="170" r="2" class="map-bg-node" />
+      <circle cx="390" cy="220" r="2" class="map-bg-node" />
+      <circle cx="440" cy="180" r="2" class="map-bg-node" />
+      <circle cx="440" cy="120" r="2" class="map-bg-node" />
+      <circle cx="500" cy="70" r="2" class="map-bg-node" />
+      <circle cx="440" cy="60" r="2" class="map-bg-node" />
+      <circle cx="580" cy="50" r="2" class="map-bg-node" />
+      <circle cx="680" cy="50" r="2" class="map-bg-node" />
+      <circle cx="540" cy="180" r="2" class="map-bg-node" />
+      <circle cx="450" cy="220" r="2" class="map-bg-node" />
+      <circle cx="480" cy="240" r="2" class="map-bg-node" />
+      <circle cx="520" cy="240" r="2" class="map-bg-node" />
+      <circle cx="470" cy="350" r="2" class="map-bg-node" />
+      <circle cx="460" cy="390" r="2" class="map-bg-node" />
+      <circle cx="570" cy="410" r="2" class="map-bg-node" />
+      <circle cx="580" cy="310" r="2" class="map-bg-node" />
+      <circle cx="660" cy="200" r="2" class="map-bg-node" />
+      <circle cx="750" cy="350" r="2" class="map-bg-node" />
+      <circle cx="260" cy="450" r="2" class="map-bg-node" />
+      <circle cx="400" cy="460" r="2" class="map-bg-node" />
+      
+      <!-- Route line -->
+      <path d="M 180 360 Q 225 340 270 340 T 310 230 T 450 320 T 680 330" fill="none" class="route-path" />
+      
+      <!-- Madrid Node -->
+      <g>
+        <circle cx="180" cy="360" r="12" fill="none" stroke="var(--accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="180" cy="360" r="5" class="map-node-dot" />
+        <circle cx="180" cy="360" r="22" fill="transparent" class="map-node-trigger" data-city="madrid" />
+        <text x="180" y="390" text-anchor="middle" class="map-node-label">Madrid</text>
+      </g>
+      
+      <!-- Barcelona Node -->
+      <g>
+        <circle cx="270" cy="340" r="12" fill="none" stroke="var(--accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="270" cy="340" r="5" class="map-node-dot" />
+        <circle cx="270" cy="340" r="22" fill="transparent" class="map-node-trigger" data-city="barcelona" />
+        <text x="270" y="315" text-anchor="middle" class="map-node-label">Barcelona</text>
+      </g>
+      
+      <!-- Paris Node -->
+      <g>
+        <circle cx="310" cy="230" r="12" fill="none" stroke="var(--accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="310" cy="230" r="5" class="map-node-dot" />
+        <circle cx="310" cy="230" r="22" fill="transparent" class="map-node-trigger" data-city="paris" />
+        <text x="310" y="205" text-anchor="middle" class="map-node-label">París</text>
+      </g>
+      
+      <!-- Rome Node -->
+      <g>
+        <circle cx="450" cy="320" r="12" fill="none" stroke="var(--accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="450" cy="320" r="5" class="map-node-dot" />
+        <circle cx="450" cy="320" r="22" fill="transparent" class="map-node-trigger" data-city="roma" />
+        <text x="450" y="350" text-anchor="middle" class="map-node-label">Roma</text>
+      </g>
+      
+      <!-- Istanbul Node -->
+      <g>
+        <circle cx="680" cy="330" r="12" fill="none" stroke="var(--accent)" stroke-width="1.2" class="pulse-ring" />
+        <circle cx="680" cy="330" r="5" class="map-node-dot" />
+        <circle cx="680" cy="330" r="22" fill="transparent" class="map-node-trigger" data-city="istanbul" />
+        <text x="680" y="360" text-anchor="middle" class="map-node-label">Estambul</text>
+      </g>
+    </svg>
+    
+    <!-- Tooltip structure -->
+    <div class="map-tooltip" id="mapTooltip">
+      <img src="" alt="" class="tooltip-img" id="tooltipImg">
+      <div class="tooltip-content">
+        <h4 id="tooltipTitle"></h4>
+        <p id="tooltipDesc"></p>
+        <span class="tooltip-action">Hacer clic para viajar →</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="roma" class="city">
   <div class="city-image" data-gallery="roma">
+    <div class="city-coordinates">41.9028° N, 12.4964° E</div>
     <div class="gallery-track"></div>
     <div class="img-overlay"></div>
     <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
@@ -237,7 +549,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">01 · Capital</div>
+    <div class="section-label reveal">01 · Capital<span class="city-time" data-timezone="Europe/Rome"></span></div>
     <h2 class="reveal reveal-delay-1">Roma<span>La Ciudad Eterna</span></h2>
     <p class="desc reveal reveal-delay-2">Donde cada piedra cuenta una historia de dos milenios. El Coliseo susurra batallas, el Foro respira República, y el Tíber fluye como la sangre de un imperio que nunca murió. Roma no se visita: se vive en cada cicatriz de su mármol.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -252,6 +564,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <section id="barcelona" class="city reverse">
   <div class="city-image" data-gallery="barcelona">
+    <div class="city-coordinates">41.3851° N, 2.1734° E</div>
     <div class="gallery-track"></div>
     <div class="img-overlay"></div>
     <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
@@ -259,7 +572,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">02 · Costa</div>
+    <div class="section-label reveal">02 · Costa<span class="city-time" data-timezone="Europe/Madrid"></span></div>
     <h2 class="reveal reveal-delay-1">Barcelona<span>Mediterráneo Salvaje</span></h2>
     <p class="desc reveal reveal-delay-2">Gaudí retorció la arquitectura como si la ciudad fuera un sueño líquido. El Mediterráneo golpea sus costas mientras las Ramblas vibran con el pulso de una cultura que fusiona lo gótico con lo vanguardista. Barcelona es un latido constante.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -274,6 +587,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <section id="paris" class="city">
   <div class="city-image" data-gallery="paris">
+    <div class="city-coordinates">48.8566° N, 2.3522° E</div>
     <div class="gallery-track"></div>
     <div class="img-overlay"></div>
     <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
@@ -281,7 +595,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">03 · Luz</div>
+    <div class="section-label reveal">03 · Luz<span class="city-time" data-timezone="Europe/Paris"></span></div>
     <h2 class="reveal reveal-delay-1">París<span>La Ciudad de la Luz</span></h2>
     <p class="desc reveal reveal-delay-2">Cada bulevar es una postal, cada café una película. París es elegancia brutal: la Torre Eiffel perfora el cielo, Notre Dame resiste el tiempo, y el Sena refleja siglos de arte, revolución y poesía. París no se explica: se siente.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -296,6 +610,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <section id="istanbul" class="city reverse">
   <div class="city-image" data-gallery="istanbul">
+    <div class="city-coordinates">41.0082° N, 28.9784° E</div>
     <div class="gallery-track"></div>
     <div class="img-overlay"></div>
     <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
@@ -303,7 +618,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">04 · Puente</div>
+    <div class="section-label reveal">04 · Puente<span class="city-time" data-timezone="Europe/Istanbul"></span></div>
     <h2 class="reveal reveal-delay-1">Estambul<span>Donde Oriente Abraza Occidente</span></h2>
     <p class="desc reveal reveal-delay-2">Santa Sofía desafía la gravedad y el tiempo. El Bósforo separa dos continentes mientras los minaretes compiten con los rascacielos. Estambul es caos sagrado, es especias en el Gran Bazar, es el alma de dos mundos en uno.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -318,6 +633,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <section id="madrid" class="city">
   <div class="city-image" data-gallery="madrid">
+    <div class="city-coordinates">40.4168° N, 3.7037° W</div>
     <div class="gallery-track"></div>
     <div class="img-overlay"></div>
     <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
@@ -325,7 +641,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">05 · Corona</div>
+    <div class="section-label reveal">05 · Corona<span class="city-time" data-timezone="Europe/Madrid"></span></div>
     <h2 class="reveal reveal-delay-1">Madrid<span>El Corazón de España</span></h2>
     <p class="desc reveal reveal-delay-2">El Museo del Prado guarda las almas de Goya y Velázquez. La Puerta del Sol late con el kilómetro cero de todas las rutas. Madrid es de noche interminable, de tapas y de una energía que nunca duerme. La capital que abraza a todos.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -507,8 +823,113 @@ if(spotlight){
   })
 }
 
+// CLOCKS
+function initClocks(){
+  const clockElms = document.querySelectorAll('.city-time');
+  function updateClocks(){
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+    clockElms.forEach(el => {
+      const tz = el.dataset.timezone;
+      if (!tz) return;
+      try {
+        const timeStr = new Intl.DateTimeFormat('es-ES', { ...timeOptions, timeZone: tz }).format(new Date());
+        el.textContent = ` · HORA LOCAL ${timeStr}`;
+      } catch(e) {
+        console.error(e);
+      }
+    });
+  }
+  updateClocks();
+  setInterval(updateClocks, 1000);
+}
+
+// PARALLAX
+function initParallax(){
+  const cities = document.querySelectorAll('.city');
+  let ticking = false;
+
+  function updateParallax(){
+    const vh = window.innerHeight;
+    cities.forEach(city => {
+      const rect = city.getBoundingClientRect();
+      if (rect.top < vh && rect.bottom > 0) {
+        const track = city.querySelector('.gallery-track');
+        if (track) {
+          const percentage = (rect.top / vh);
+          const shiftY = percentage * 45; // max shift in pixels
+          track.style.transform = `translateY(${shiftY}px)`;
+        }
+      }
+    });
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }, { passive: true });
+  updateParallax();
+}
+
+// MAP INTERACTIVITY
+function initInteractiveMap(){
+  const mapContainer = document.querySelector('.map-container');
+  const tooltip = document.getElementById('mapTooltip');
+  const tooltipImg = document.getElementById('tooltipImg');
+  const tooltipTitle = document.getElementById('tooltipTitle');
+  const tooltipDesc = document.getElementById('tooltipDesc');
+  
+  if (!mapContainer || !tooltip) return;
+
+  const cityData = {
+    roma: { title: "Roma", desc: "La Ciudad Eterna. Un imperio de dos milenios tallado en mármol.", img: galleries.roma[0] },
+    barcelona: { title: "Barcelona", desc: "Costa mediterránea salvaje y la fluidez del sueño de Gaudí.", img: galleries.barcelona[0] },
+    paris: { title: "París", desc: "La Ciudad de la Luz. Poesía brutal y elegancia eterna que corta el cielo.", img: galleries.paris[0] },
+    istanbul: { title: "Estambul", desc: "El puente de dos mundos. Caos de especias, mezquitas y el Bósforo.", img: galleries.istanbul[0] },
+    madrid: { title: "Madrid", desc: "El Corazón de España. Arte inmortal, tapas y una noche infinita.", img: galleries.madrid[0] }
+  };
+
+  document.querySelectorAll('.map-node-trigger').forEach(trigger => {
+    trigger.addEventListener('mouseenter', e => {
+      const key = e.target.dataset.city;
+      const data = cityData[key];
+      if (!data) return;
+      
+      tooltipImg.src = data.img;
+      tooltipTitle.textContent = data.title;
+      tooltipDesc.textContent = data.desc;
+      
+      const rect = e.target.getBoundingClientRect();
+      const containerRect = mapContainer.getBoundingClientRect();
+      const left = rect.left - containerRect.left + rect.width / 2;
+      const top = rect.top - containerRect.top;
+      
+      tooltip.style.left = `${left}px`;
+      tooltip.style.top = `${top}px`;
+      tooltip.classList.add('active');
+    });
+    
+    trigger.addEventListener('mouseleave', () => {
+      tooltip.classList.remove('active');
+    });
+    
+    trigger.addEventListener('click', e => {
+      const key = e.target.dataset.city;
+      const targetEl = document.getElementById(key);
+      if (targetEl) {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+}
+
 // BOOT
 initGalleries()
+initClocks()
+initParallax()
+initInteractiveMap()
 </script>
 </body>
 </html>
