@@ -664,7 +664,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 <section class="hero">
   <div class="hero-bg"></div>
   <video autoplay muted loop playsinline class="hero-video">
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-colosseum-in-rome-italy-42630-large.mp4" type="video/mp4">
+    <source src="https://player.vimeo.com/external/409240417.sd.mp4?s=df8c2b74fe40954be495f57dd28eb61b4db1b1c2&profile_id=165&oauth2_token_id=57447761" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-spotlight" id="heroSpotlight"></div>
@@ -1445,12 +1445,25 @@ function initCalculator(){
   updateUI();
 }
 
+// HERO VIDEO FALLBACK CONTROLLER
+function initHeroVideo(){
+  const video = document.querySelector('.hero-video');
+  const fallback = document.querySelector('.hero-bg');
+  if (video && fallback) {
+    fallback.style.transition = 'opacity 1.2s ease';
+    video.addEventListener('playing', () => {
+      fallback.style.opacity = '0';
+    });
+  }
+}
+
 // BOOT
 initGalleries()
 initClocks()
 initParallax()
 initInteractiveMap()
 initCalculator()
+initHeroVideo()
 </script>
 </body>
 </html>
