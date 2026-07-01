@@ -1451,9 +1451,24 @@ function initHeroVideo(){
   const fallback = document.querySelector('.hero-bg');
   if (video && fallback) {
     fallback.style.transition = 'opacity 1.2s ease';
-    video.addEventListener('playing', () => {
+    
+    const fadeOut = () => {
       fallback.style.opacity = '0';
+    };
+
+    // Programmatic play trigger to handle autoplay policy and resolve race condition
+    video.play().then(() => {
+      fadeOut();
+    }).catch(err => {
+      console.log("Autoplay blocked or delayed, using image fallback:", err);
+      // Keep static image visible if autoplay fails
+      fallback.style.opacity = '0.25';
     });
+
+    // Event listeners as secondary fallback triggers
+    video.addEventListener('playing', fadeOut);
+    video.addEventListener('canplay', fadeOut);
+    video.addEventListener('loadeddata', fadeOut);
   }
 }
 
