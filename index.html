@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ΛDVENTURE EUROPA — Brutal Collection</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<!-- Preload cover images for super-fast loading -->
+<link rel="preload" href="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1600&q=80" as="image">
+<link rel="preload" href="https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=1600&q=80" as="image">
+<link rel="preload" href="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80" as="image">
+<link rel="preload" href="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1600&q=80" as="image">
+<link rel="preload" href="https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=1600&q=80" as="image">
 <style>
 :root{--bg:#0c0c0e;--bg2:#121214;--surface:#18181b;--border:#222226;--muted:#6b6b76;--accent:#c62828;--accent2:#8b1a1a;--text:#e8e8ed;--text2:#a0a0ab;--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-serif:'Playfair Display',Georgia,serif}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -683,7 +689,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 
 <script>
 // GALLERY DATA
-const Q='auto=format&fit=crop&w=1920&q=80'
+const Q='auto=format&fit=crop&w=1600&q=80'
 const U='https://images.unsplash.com/photo-'
 const galleries={
   roma:[
@@ -695,8 +701,8 @@ const galleries={
   barcelona:[
     U+'1583422409516-2895a77efded?'+Q,
     U+'1579952363873-27f3bade9f55?'+Q,
-    U+'1688680437050-d2cddf4f20b2?'+Q,
-    U+'1557700055-b354bee54b69?'+Q
+    U+'1523531294919-4bcd7c65e216?'+Q,
+    U+'1563805042-7684c019e1cb?'+Q
   ],
   paris:[
     U+'1502602898657-3e91760cbb34?'+Q,
@@ -707,13 +713,14 @@ const galleries={
   istanbul:[
     U+'1524231757912-21f4fe3a7200?'+Q,
     U+'1565299507177-b0ac66763828?'+Q,
-    U+'1570968915860-54d5c301fa9f?'+Q
+    U+'1570968915860-54d5c301fa9f?'+Q,
+    U+'1605553530708-f40413998740?'+Q
   ],
   madrid:[
     U+'1543783207-ec64e4d95325?'+Q,
     U+'1569676814972-31aa39db5817?'+Q,
     U+'1667870196661-e0793dd1211f?'+Q,
-    U+'1655814695913-b78ba009ceb3?'+Q
+    U+'1509840841025-9088ba78a826?'+Q
   ]
 }
 
