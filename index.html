@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ΛDVENTURE EUROPA — Brutal Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c0c0e;--bg2:#121214;--surface:#18181b;--border:#222226;--muted:#6b6b76;--accent:#c62828;--accent2:#8b1a1a;--text:#e8e8ed;--text2:#a0a0ab;--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-serif:'Playfair Display',Georgia,serif}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;cursor:none}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+::selection{background:var(--accent);color:#fff}
+
+/* CUSTOM CURSOR */
+.cursor{position:fixed;pointer-events:none;z-index:99999;mix-blend-mode:difference;transition:transform .08s linear}
+.cursor-dot{width:8px;height:8px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.cursor-ring{width:40px;height:40px;border:1.5px solid rgba(255,255,255,.6);border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border-color .3s}
+.cursor-ring.hover{width:64px;height:64px;background:rgba(198,40,40,.15);border-color:var(--accent)}
+
+/* PRELOADER */
+#preloader{position:fixed;inset:0;z-index:99998;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s,visibility .8s}
+#preloader.hidden{opacity:0;visibility:hidden}
+.preloader-logo{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:-.05em;line-height:1;background:linear-gradient(135deg,var(--text) 30%,var(--accent) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.preloader-sub{font-size:.7rem;letter-spacing:.45em;text-transform:uppercase;color:var(--muted);margin-top:.75rem}
+.loader-bar-wrap{width:200px;height:2px;background:var(--border);margin-top:2.5rem;border-radius:4px;overflow:hidden}
+.loader-bar-wrap span{display:block;width:0;height:100%;background:var(--accent);animation:loadBar 1.6s cubic-bezier(.25,.46,.45,.94) forwards}
+@keyframes loadBar{0%{width:0}100%{width:100%}}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:9995;padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;transition:background .5s cubic-bezier(.25,.46,.45,.94);mix-blend-mode:difference}
+nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1.2);mix-blend-mode:normal;border-bottom:1px solid rgba(255,255,255,.04)}
+.nav-logo{font-size:1.35rem;font-weight:900;letter-spacing:-.03em;color:#fff;text-decoration:none;font-family:var(--font-sans)}
+.nav-logo em{font-style:normal;color:var(--accent)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;transition:color .4s;position:relative;padding:.25rem 0}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--accent);transition:width .4s cubic-bezier(.25,.46,.45,.94)}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:5px;z-index:10001}
+.nav-toggle span{width:28px;height:1.5px;background:#fff;transition:all .35s;border-radius:2px}
+.nav-toggle.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-toggle.active span:nth-child(2){opacity:0}
+.nav-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* HERO */
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?q=80&w=2070&auto=format&fit=crop') center/cover;opacity:.25;transform:scale(1.05);animation:heroZoom 24s ease infinite alternate}
+@keyframes heroZoom{0%{transform:scale(1.05)}100%{transform:scale(1.18)}}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(198,40,40,.15) 0%,transparent 65%),linear-gradient(180deg,transparent 0%,var(--bg) 100%)}
+.hero-spotlight{position:absolute;inset:0;pointer-events:none;opacity:.5;transition:opacity .3s}
+.hero-content{position:relative;z-index:2;text-align:center;max-width:960px;padding:2rem}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(255,255,255,.08);padding:.45rem 1.5rem;border-radius:100px;font-size:.65rem;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-bottom:2.5rem;background:rgba(255,255,255,.03);backdrop-filter:blur(4px)}
+.hero-badge span{width:5px;height:5px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulseDot 2s ease infinite}
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2.8rem,12vw,9rem);font-weight:900;line-height:.85;letter-spacing:-.06em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero h1 span{display:block}
+.hero h1 .line1{background:linear-gradient(135deg,var(--text) 25%,var(--muted) 75%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h1 .line2{background:linear-gradient(135deg,var(--accent) 20%,#e57373 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:clamp(.9rem,1.2vw,1.1rem);color:var(--text2);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-primary{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border:none;cursor:none;overflow:hidden}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.12) 100%);pointer-events:none}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 24px 48px rgba(198,40,40,.25)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;border:1.5px solid rgba(255,255,255,.12);color:var(--text);text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none;background:rgba(255,255,255,.03);backdrop-filter:blur(4px)}
+.btn-outline:hover{border-color:var(--accent);background:rgba(198,40,40,.08);box-shadow:0 0 40px rgba(198,40,40,.08)}
+.scroll-indicator{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--muted);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase}
+.scroll-line{width:1px;height:50px;background:linear-gradient(180deg,var(--muted),transparent);animation:scrollPulse 2.4s ease infinite}
+@keyframes scrollPulse{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* CITIES GENERAL */
+.section-label{font-size:.65rem;letter-spacing:.38em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.75rem}
+.section-label::before{content:'';width:24px;height:1.5px;background:var(--accent);display:inline-block}
+
+.city{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;position:relative;overflow:hidden}
+.city.reverse{grid-template-columns:.9fr 1.1fr;direction:rtl}
+.city.reverse .city-content{direction:ltr}
+.city-image{position:relative;overflow:hidden;min-height:70vh}
+.city-image .gallery-track{position:absolute;inset:0}
+.city-image .gallery-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .9s cubic-bezier(.25,.46,.45,.94),transform 1.4s cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform;transform:scale(1)}
+.city-image .gallery-img.active{opacity:1;z-index:1}
+.city-image:hover .gallery-img.active{transform:scale(1.05)}
+.city-image::after{content:'';position:absolute;inset:0;background:linear-gradient(160deg,rgba(198,40,40,.18),transparent 55%);pointer-events:none;z-index:2}
+.city-image .img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg2) 0%,transparent 30%,transparent 70%,var(--bg2) 100%);pointer-events:none;opacity:.4;z-index:2}
+
+/* GALLERY ARROWS */
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(12,12,14,.7);border:1px solid rgba(255,255,255,.08);color:#fff;width:44px;height:44px;font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;transition:all .4s cubic-bezier(.25,.46,.45,.94);backdrop-filter:blur(8px);font-family:var(--font-sans);line-height:1;padding-bottom:3px}
+.city-image:hover .gallery-arrow{opacity:1}
+.gallery-arrow:hover{background:var(--accent);border-color:var(--accent)}
+.gallery-prev{left:1rem}
+.gallery-next{right:1rem}
+
+/* GALLERY DOTS */
+.gallery-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:.5rem;opacity:0;transition:opacity .4s}
+.city-image:hover .gallery-dots{opacity:1}
+.gallery-dots .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:transparent;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none}
+.gallery-dots .dot.active{background:#fff;border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.3)}
+.gallery-dots .dot:hover{background:var(--accent);border-color:var(--accent)}
+
+.city-content{display:flex;flex-direction:column;justify-content:center;padding:5rem 4.5rem;background:var(--bg2);position:relative}
+.city-number{position:absolute;bottom:2rem;right:3rem;font-size:10rem;font-weight:900;color:rgba(198,40,40,.06);line-height:.8;pointer-events:none;font-family:var(--font-serif);font-style:italic;letter-spacing:-.06em}
+.city.reverse .city-number{right:auto;left:3rem}
+.city-content h2{font-size:clamp(2.2rem,4.5vw,4rem);font-weight:900;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:.75rem;position:relative;line-height:1}
+.city-content h2 span{display:block;font-size:.85rem;font-weight:400;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);margin-top:.6rem;font-family:var(--font-sans);font-weight:300}
+.city-content .desc{color:var(--text2);line-height:1.8;font-size:.92rem;margin-bottom:2rem;max-width:480px;font-weight:300}
+.city-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
+.city-stat span:first-child{font-size:1.8rem;font-weight:900;color:var(--text);display:block;line-height:1;letter-spacing:-.03em}
+.city-stat span:last-child{font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.35rem;display:block}
+.btn-city{display:inline-flex;align-items:center;gap:.6rem;color:var(--text);text-decoration:none;font-weight:600;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border-bottom:2px solid var(--accent);padding-bottom:.35rem;cursor:none}
+.btn-city:hover{gap:1.2rem;color:var(--accent);border-bottom-color:var(--accent2)}
+
+/* CONTACT */
+.contact{min-height:80vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,var(--bg2),var(--bg));padding:6rem 2rem;position:relative;overflow:hidden}
+.contact::before{content:'CONTACT';position:absolute;font-size:clamp(6rem,22vw,22rem);font-weight:900;color:rgba(255,255,255,.015);top:50%;left:50%;transform:translate(-50%,-50%);letter-spacing:-.06em;pointer-events:none;white-space:nowrap;font-family:var(--font-serif);font-style:italic}
+.contact-inner{position:relative;z-index:2;width:100%;max-width:680px;text-align:center}
+.contact h2{font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:.6rem;line-height:1}
+.contact .sub{color:var(--text2);margin-bottom:3rem;font-size:.92rem;font-weight:300}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.contact input,.contact textarea{width:100%;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:.88rem;transition:all .35s;outline:none;border-radius:0;cursor:none}
+.contact input::placeholder,.contact textarea::placeholder{color:var(--muted);font-weight:300}
+.contact input:focus,.contact textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(198,40,40,.08);background:var(--bg2)}
+.contact textarea{grid-column:1/-1;resize:vertical;min-height:130px}
+.contact button{width:100%;padding:1.2rem;background:var(--accent);color:#fff;border:none;font-size:.82rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .35s;position:relative;overflow:hidden}
+.contact button::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.1) 100%)}
+.contact button:hover{background:var(--accent2);box-shadow:0 16px 32px rgba(198,40,40,.2)}
+
+/* FOOTER */
+footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);font-weight:300}
+footer .socials{display:flex;gap:1.5rem}
+footer .socials a{color:var(--muted);text-decoration:none;transition:color .35s;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:none}
+footer .socials a:hover{color:var(--accent)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(50px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* MQ */
+@media(max-width:960px){
+nav{padding:1rem 1.5rem}
+.nav-links{position:fixed;top:0;right:-100%;width:78%;max-width:340px;height:100vh;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:2.5rem;transition:right .55s cubic-bezier(.25,.46,.45,.94);z-index:10000;border-left:1px solid var(--border)}
+.nav-links.open{right:0}
+  .nav-links a{font-size:.95rem;color:rgba(255,255,255,.85);letter-spacing:.18em;transition:color .4s cubic-bezier(.25,.46,.45,.94),padding-left .4s cubic-bezier(.25,.46,.45,.94)}
+  .nav-links a:hover{color:var(--accent)!important;padding-left:8px}
+  .nav-links a::after{background:var(--accent);height:2px;bottom:-2px}
+  .nav-links a:hover::after{width:60%}
+.nav-toggle{display:flex;cursor:pointer}
+.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;opacity:0;visibility:hidden;transition:all .4s;backdrop-filter:blur(4px)}
+.nav-overlay.active{opacity:1;visibility:visible}
+.city,.city.reverse{grid-template-columns:1fr;min-height:auto;direction:ltr}
+.city-image{min-height:45vh}
+.city-content{padding:3rem 2rem}
+.city-number{font-size:6rem;bottom:1rem;right:1.5rem}
+.city.reverse .city-number{right:1.5rem;left:auto}
+body{cursor:default}
+.cursor{display:none}
+.hero h1{font-size:clamp(2.5rem,14vw,4.5rem)}
+.hero-actions .btn-outline{margin-left:0}
+.contact-grid{grid-template-columns:1fr}
+.gallery-arrow{width:36px;height:36px;font-size:1.3rem}
+.gallery-arrow{opacity:1}
+.gallery-dots{opacity:1}
+}
+@media(max-width:480px){
+nav{padding:.8rem 1.2rem}
+.nav-logo{font-size:1.05rem}
+.city-content{padding:2rem 1.5rem}
+.city-content h2{font-size:1.8rem}
+.city-stats{gap:1.2rem}
+.city-stat span:first-child{font-size:1.4rem}
+.contact{padding:4rem 1.2rem}
+footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+</div>
+
+<div id="preloader">
+  <div class="preloader-logo">ΛDVENTURE</div>
+  <div class="preloader-sub">Europa Brutal Collection</div>
+  <div class="loader-bar-wrap"><span></span></div>
+</div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">ΛD<em>V</em>ENTURE</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#roma" style="color:#fff">Roma</a></li>
+    <li><a href="#barcelona" style="color:#fff">Barcelona</a></li>
+    <li><a href="#paris" style="color:#fff">Paris</a></li>
+    <li><a href="#istanbul" style="color:#fff">Istanbul</a></li>
+    <li><a href="#madrid" style="color:#fff">Madrid</a></li>
+    <li><a href="#contacto" style="color:#fff">Contacto</a></li>
+  </ul>
+  <div class="nav-toggle" id="navToggle">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="nav-overlay" id="navOverlay"></div>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-spotlight" id="heroSpotlight"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span></span>Colección 2026 · Brutal</div>
+    <h1>
+      <span class="line1">Europa</span>
+      <span class="line2">Salvaje</span>
+    </h1>
+    <p>Cinco ciudades. Cinco universos. Una experiencia brutal que redefine el viaje. Roma, Barcelona, París, Estambul, Madrid.</p>
+    <div class="hero-actions">
+      <a href="#roma" class="btn-primary">Explorar</a>
+      <a href="#contacto" class="btn-outline">Reservar</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Desliza</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<section id="roma" class="city">
+  <div class="city-image" data-gallery="roma">
+    <div class="gallery-track"></div>
+    <div class="img-overlay"></div>
+    <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
+    <button class="gallery-arrow gallery-next" aria-label="Siguiente">›</button>
+    <div class="gallery-dots"></div>
+  </div>
+  <div class="city-content">
+    <div class="section-label reveal">01 · Capital</div>
+    <h2 class="reveal reveal-delay-1">Roma<span>La Ciudad Eterna</span></h2>
+    <p class="desc reveal reveal-delay-2">Donde cada piedra cuenta una historia de dos milenios. El Coliseo susurra batallas, el Foro respira República, y el Tíber fluye como la sangre de un imperio que nunca murió. Roma no se visita: se vive en cada cicatriz de su mármol.</p>
+    <div class="city-stats reveal reveal-delay-3">
+      <div class="city-stat"><span>2,800+</span><span>Años de historia</span></div>
+      <div class="city-stat"><span>4M</span><span>Visitantes/año</span></div>
+      <div class="city-stat"><span>900+</span><span>Iglesias</span></div>
+    </div>
+    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-number">I</div>
+  </div>
+</section>
+
+<section id="barcelona" class="city reverse">
+  <div class="city-image" data-gallery="barcelona">
+    <div class="gallery-track"></div>
+    <div class="img-overlay"></div>
+    <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
+    <button class="gallery-arrow gallery-next" aria-label="Siguiente">›</button>
+    <div class="gallery-dots"></div>
+  </div>
+  <div class="city-content">
+    <div class="section-label reveal">02 · Costa</div>
+    <h2 class="reveal reveal-delay-1">Barcelona<span>Mediterráneo Salvaje</span></h2>
+    <p class="desc reveal reveal-delay-2">Gaudí retorció la arquitectura como si la ciudad fuera un sueño líquido. El Mediterráneo golpea sus costas mientras las Ramblas vibran con el pulso de una cultura que fusiona lo gótico con lo vanguardista. Barcelona es un latido constante.</p>
+    <div class="city-stats reveal reveal-delay-3">
+      <div class="city-stat"><span>4.5M</span><span>Habitantes</span></div>
+      <div class="city-stat"><span>8</span><span>Obras UNESCO</span></div>
+      <div class="city-stat"><span>325+</span><span>Días de sol</span></div>
+    </div>
+    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-number">II</div>
+  </div>
+</section>
+
+<section id="paris" class="city">
+  <div class="city-image" data-gallery="paris">
+    <div class="gallery-track"></div>
+    <div class="img-overlay"></div>
+    <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
+    <button class="gallery-arrow gallery-next" aria-label="Siguiente">›</button>
+    <div class="gallery-dots"></div>
+  </div>
+  <div class="city-content">
+    <div class="section-label reveal">03 · Luz</div>
+    <h2 class="reveal reveal-delay-1">París<span>La Ciudad de la Luz</span></h2>
+    <p class="desc reveal reveal-delay-2">Cada bulevar es una postal, cada café una película. París es elegancia brutal: la Torre Eiffel perfora el cielo, Notre Dame resiste el tiempo, y el Sena refleja siglos de arte, revolución y poesía. París no se explica: se siente.</p>
+    <div class="city-stats reveal reveal-delay-3">
+      <div class="city-stat"><span>2.1M</span><span>Habitantes</span></div>
+      <div class="city-stat"><span>130+</span><span>Museos</span></div>
+      <div class="city-stat"><span>33M</span><span>Turistas/año</span></div>
+    </div>
+    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-number">III</div>
+  </div>
+</section>
+
+<section id="istanbul" class="city reverse">
+  <div class="city-image" data-gallery="istanbul">
+    <div class="gallery-track"></div>
+    <div class="img-overlay"></div>
+    <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
+    <button class="gallery-arrow gallery-next" aria-label="Siguiente">›</button>
+    <div class="gallery-dots"></div>
+  </div>
+  <div class="city-content">
+    <div class="section-label reveal">04 · Puente</div>
+    <h2 class="reveal reveal-delay-1">Estambul<span>Donde Oriente Abraza Occidente</span></h2>
+    <p class="desc reveal reveal-delay-2">Santa Sofía desafía la gravedad y el tiempo. El Bósforo separa dos continentes mientras los minaretes compiten con los rascacielos. Estambul es caos sagrado, es especias en el Gran Bazar, es el alma de dos mundos en uno.</p>
+    <div class="city-stats reveal reveal-delay-3">
+      <div class="city-stat"><span>15.5M</span><span>Habitantes</span></div>
+      <div class="city-stat"><span>2</span><span>Continentes</span></div>
+      <div class="city-stat"><span>3,000+</span><span>Mezquitas</span></div>
+    </div>
+    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-number">IV</div>
+  </div>
+</section>
+
+<section id="madrid" class="city">
+  <div class="city-image" data-gallery="madrid">
+    <div class="gallery-track"></div>
+    <div class="img-overlay"></div>
+    <button class="gallery-arrow gallery-prev" aria-label="Anterior">‹</button>
+    <button class="gallery-arrow gallery-next" aria-label="Siguiente">›</button>
+    <div class="gallery-dots"></div>
+  </div>
+  <div class="city-content">
+    <div class="section-label reveal">05 · Corona</div>
+    <h2 class="reveal reveal-delay-1">Madrid<span>El Corazón de España</span></h2>
+    <p class="desc reveal reveal-delay-2">El Museo del Prado guarda las almas de Goya y Velázquez. La Puerta del Sol late con el kilómetro cero de todas las rutas. Madrid es de noche interminable, de tapas y de una energía que nunca duerme. La capital que abraza a todos.</p>
+    <div class="city-stats reveal reveal-delay-3">
+      <div class="city-stat"><span>3.3M</span><span>Habitantes</span></div>
+      <div class="city-stat"><span>40+</span><span>Museos</span></div>
+      <div class="city-stat"><span>280+</span><span>Días de sol</span></div>
+    </div>
+    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-number">V</div>
+  </div>
+</section>
+
+<section id="contacto" class="contact">
+  <div class="contact-inner">
+    <div class="section-label reveal" style="justify-content:center">Contacto</div>
+    <h2 class="reveal reveal-delay-1">Reserva tu aventura</h2>
+    <p class="sub reveal reveal-delay-2">Déjanos tus datos y te diseñaremos un viaje brutal y personalizado por Europa.</p>
+    <form class="reveal reveal-delay-3">
+      <div class="contact-grid">
+        <input type="text" placeholder="Nombre completo" required>
+        <input type="email" placeholder="Email" required>
+        <input type="tel" placeholder="Teléfono">
+        <input type="text" placeholder="Ciudad de interés">
+        <textarea placeholder="Cuéntanos sobre tu aventura ideal..."></textarea>
+      </div>
+      <button type="submit">Enviar solicitud</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 ΛDVENTURE · Brutal Collection</span>
+  <div class="socials">
+    <a href="#">Instagram</a>
+    <a href="#">X</a>
+    <a href="#">TikTok</a>
+  </div>
+</footer>
+
+<script>
+// GALLERY DATA
+const Q='auto=format&fit=crop&w=1920&q=80'
+const U='https://images.unsplash.com/photo-'
+const galleries={
+  roma:[
+    U+'1552832230-c0197dd311b5?'+Q,
+    U+'1525874684015-58379d421a52?'+Q,
+    U+'1531572753322-ad063cecc140?'+Q,
+    U+'1567529684892-09290a1b2d05?'+Q
+  ],
+  barcelona:[
+    U+'1583422409516-2895a77efded?'+Q,
+    U+'1579952363873-27f3bade9f55?'+Q,
+    U+'1688680437050-d2cddf4f20b2?'+Q,
+    U+'1557700055-b354bee54b69?'+Q
+  ],
+  paris:[
+    U+'1502602898657-3e91760cbb34?'+Q,
+    U+'1569913486515-b74bf7751574?'+Q,
+    U+'1499856871958-5b9627545d1a?'+Q,
+    U+'1492136344046-866c85e0bf04?'+Q
+  ],
+  istanbul:[
+    U+'1524231757912-21f4fe3a7200?'+Q,
+    U+'1565299507177-b0ac66763828?'+Q,
+    U+'1570968915860-54d5c301fa9f?'+Q
+  ],
+  madrid:[
+    U+'1543783207-ec64e4d95325?'+Q,
+    U+'1569676814972-31aa39db5817?'+Q,
+    U+'1667870196661-e0793dd1211f?'+Q,
+    U+'1655814695913-b78ba009ceb3?'+Q
+  ]
+}
+
+function initGalleries(){
+  document.querySelectorAll('.city-image[data-gallery]').forEach(el=>{
+    const key=el.dataset.gallery
+    const imgs=galleries[key]
+    if(!imgs)return
+    const track=el.querySelector('.gallery-track')
+    const dots=el.querySelector('.gallery-dots')
+    let current=0
+
+    imgs.forEach((src,i)=>{
+      const img=document.createElement('img')
+      img.className='gallery-img'+(i===0?' active':'')
+      img.src=src
+      img.alt=key+' '+i
+      img.loading='lazy'
+      track.appendChild(img)
+
+      const dot=document.createElement('div')
+      dot.className='dot'+(i===0?' active':'')
+      dot.addEventListener('click',e=>{e.stopPropagation();goTo(i)})
+      dots.appendChild(dot)
+    })
+
+    const prev=el.querySelector('.gallery-prev')
+    const next=el.querySelector('.gallery-next')
+
+    function goTo(idx){
+      if(idx===current)return
+      const all=track.querySelectorAll('.gallery-img')
+      const allDots=dots.querySelectorAll('.dot')
+      all[current].classList.remove('active')
+      allDots[current].classList.remove('active')
+      current=idx
+      all[current].classList.add('active')
+      allDots[current].classList.add('active')
+    }
+
+    prev.addEventListener('click',e=>{e.stopPropagation();goTo(current===0?imgs.length-1:current-1)})
+    next.addEventListener('click',e=>{e.stopPropagation();goTo(current===imgs.length-1?0:current+1)})
+  })
+}
+
+// PRELOADER
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),1200)
+})
+
+// NAV SCROLL
+const nav=document.getElementById('navbar')
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>80))
+
+// MOBILE NAV
+const navToggle=document.getElementById('navToggle')
+const navLinks=document.getElementById('navLinks')
+const navOverlay=document.getElementById('navOverlay')
+function toggleNav(){
+  navLinks.classList.toggle('open')
+  navToggle.classList.toggle('active')
+  navOverlay.classList.toggle('active')
+}
+function closeNav(){
+  navLinks.classList.remove('open')
+  navToggle.classList.remove('active')
+  navOverlay.classList.remove('active')
+}
+navToggle.addEventListener('click',toggleNav)
+navOverlay.addEventListener('click',closeNav)
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',closeNav))
+
+// REVEAL ON SCROLL
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}
+  })
+},{threshold:.12})
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))
+
+// CUSTOM CURSOR
+const cursor=document.getElementById('cursor')
+const ring=document.getElementById('cursorRing')
+let mx=0,my=0,cx=0,cy=0
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY})
+function animateCursor(){
+  cx+=(mx-cx)*.18;cy+=(my-cy)*.18
+  cursor.style.transform=`translate(${cx}px,${cy}px)`
+  requestAnimationFrame(animateCursor)
+}
+animateCursor()
+document.querySelectorAll('a,button,input,textarea,.btn-city,.btn-primary,.btn-outline,nav,.city-image,.nav-toggle,.gallery-arrow,.dot').forEach(el=>{
+  el.addEventListener('mouseenter',()=>ring.classList.add('hover'))
+  el.addEventListener('mouseleave',()=>ring.classList.remove('hover'))
+})
+
+// SPOTLIGHT
+const spotlight=document.getElementById('heroSpotlight')
+if(spotlight){
+  document.querySelector('.hero').addEventListener('mousemove',e=>{
+    const r=e.currentTarget.getBoundingClientRect()
+    const x=((e.clientX-r.left)/r.width)*100
+    const y=((e.clientY-r.top)/r.height)*100
+    spotlight.style.background=`radial-gradient(circle at ${x}% ${y}%, rgba(198,40,40,.18) 0%, transparent 60%)`
+  })
+}
+
+// BOOT
+initGalleries()
+</script>
+</body>
+</html>
