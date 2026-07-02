@@ -640,6 +640,7 @@ nav{padding:.8rem 1.2rem}
 .city-stat span:first-child{font-size:1.4rem}
 .contact{padding:4rem 1.2rem}
 footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
+.section-label{flex-wrap:wrap;gap:0.4rem}
 }
 @media (hover:none),(pointer:coarse){
   html,body,a,button,input,textarea,.btn-city,.btn-primary,.btn-outline,.gallery-arrow,.dot,.nav-toggle{cursor:auto}
@@ -648,6 +649,312 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
   .hero-bg,.gallery-track{transform:none!important}
+}
+
+/* NEW PREMIUM FEATURES CSS */
+
+/* Smooth Scroll container adjustments if needed, though we scroll window directly */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) var(--bg);
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 3px;
+}
+
+/* Magnetic Buttons transitions */
+.btn-primary, .btn-outline, .btn-city, .btn-city-video {
+  transition: transform 0.2s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+/* Map improved route lights & km counter */
+.map-stats {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.map-stats-num {
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--accent);
+  font-family: monospace;
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+.map-stats-label {
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.25em;
+  font-weight: 700;
+}
+.route-light-path {
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  fill: none;
+  stroke-dasharray: 50, 450;
+  animation: travelLight 8s linear infinite;
+  filter: drop-shadow(0 0 5px var(--accent));
+}
+@keyframes travelLight {
+  0% { stroke-dashoffset: 500; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Weather Widget */
+.city-weather {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-left: 0.75rem;
+  font-family: monospace;
+  font-size: 0.65rem;
+  color: var(--text2);
+}
+.weather-icon-svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Lightbox de Video */
+.city-image {
+  position: relative;
+}
+.city-actions {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.btn-city-video {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 0.35rem;
+  cursor: none;
+  transition: all 0.35s var(--ease);
+}
+.btn-city-video:hover {
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+.btn-city-video span {
+  font-size: 0.65rem;
+  color: var(--accent);
+  transition: transform 0.3s var(--ease);
+  display: inline-block;
+}
+.btn-city-video:hover span {
+  transform: scale(1.2);
+}
+.video-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 11000;
+  background: rgba(8, 8, 10, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
+  backdrop-filter: blur(16px) saturate(1.2);
+  padding: 2rem;
+}
+.video-lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox-container {
+  width: 100%;
+  max-width: 1120px;
+  aspect-ratio: 16/9;
+  position: relative;
+  background: #000;
+  border: 1px solid var(--border);
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.8);
+  transform: scale(0.95);
+  transition: transform 0.5s var(--ease);
+}
+.video-lightbox.active .lightbox-container {
+  transform: scale(1);
+}
+.lightbox-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lightbox-close {
+  position: absolute;
+  top: -2.8rem;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 2.2rem;
+  cursor: none;
+  transition: color 0.3s;
+  line-height: 1;
+  padding: 0.5rem;
+}
+.lightbox-close:hover {
+  color: var(--accent);
+}
+
+/* Timeline / Itinerario */
+.city-timeline {
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 2rem;
+  max-width: 480px;
+}
+.timeline-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.timeline-title::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: inline-block;
+}
+.timeline-items {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 1.5rem;
+}
+.timeline-items::before {
+  content: '';
+  position: absolute;
+  top: 0.25rem;
+  left: 3px;
+  width: 1px;
+  height: calc(100% - 1.25rem);
+  background: var(--border);
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+.timeline-dot {
+  position: absolute;
+  left: calc(-1.5rem + 1px);
+  top: 0.32rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s;
+}
+.timeline-item.active .timeline-dot {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.timeline-header {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.15rem 0;
+  transition: color 0.3s;
+}
+.timeline-header:hover {
+  color: var(--text);
+}
+.timeline-item.active .timeline-header {
+  color: var(--text);
+}
+.timeline-toggle {
+  font-size: 0.85rem;
+  color: var(--muted);
+  transition: transform 0.3s var(--ease), color 0.3s;
+}
+.timeline-header:hover .timeline-toggle {
+  color: var(--accent);
+}
+.timeline-item.active .timeline-toggle {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+.timeline-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding-top 0.4s var(--ease), opacity 0.4s var(--ease);
+  opacity: 0;
+}
+.timeline-item.active .timeline-body {
+  padding-top: 0.5rem;
+  max-height: 120px;
+  opacity: 1;
+}
+.timeline-desc {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+@media(max-width:960px) {
+  .btn-city-video {
+    cursor: default;
+  }
+  .video-lightbox {
+    padding: 1rem;
+  }
+  .lightbox-close {
+    top: -2.4rem;
+    font-size: 1.8rem;
+  }
+  .city-timeline {
+    max-width: 100%;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+  }
+  .timeline-header {
+    cursor: default;
+  }
 }
 </style>
 </head>
@@ -711,6 +1018,11 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
   <div class="section-label reveal">La Ruta · Mapa Interactivo</div>
   <h2 class="reveal reveal-delay-1">El Viaje Salvaje</h2>
   <p class="reveal reveal-delay-2">Sigue el itinerario diseñado a través de las cinco ciudades más brutales del continente. Pasa el cursor sobre cada nodo para previsualizar los detalles y haz clic para viajar directamente a su sección.</p>
+  
+  <div class="map-stats reveal reveal-delay-2">
+    <span class="map-stats-num" id="kmCounter">0</span>
+    <span class="map-stats-label">KM DE AVENTURA RECORRIDOS</span>
+  </div>
   
   <div class="map-container reveal reveal-delay-3">
     <svg viewBox="0 0 800 480" class="europe-map">
@@ -795,6 +1107,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       
       <!-- Route line -->
       <path d="M 180 360 Q 225 340 270 340 T 310 230 T 450 320 T 680 330" fill="none" class="route-path" />
+      <path d="M 180 360 Q 225 340 270 340 T 310 230 T 450 320 T 680 330" fill="none" class="route-light-path" />
       
       <!-- Madrid Node -->
       <g>
@@ -859,7 +1172,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">01 · Capital<span class="city-time" data-timezone="Europe/Rome"></span></div>
+    <div class="section-label reveal">01 · Capital<span class="city-time" data-timezone="Europe/Rome"></span><span class="city-weather" data-city="roma"></span></div>
     <h2 class="reveal reveal-delay-1">Roma<span>La Ciudad Eterna</span></h2>
     <p class="desc reveal reveal-delay-2">Donde cada piedra cuenta una historia de dos milenios. El Coliseo susurra batallas, el Foro respira República, y el Tíber fluye como la sangre de un imperio que nunca murió. Roma no se visita: se vive en cada cicatriz de su mármol.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -867,7 +1180,36 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       <div class="city-stat"><span>4M</span><span>Visitantes/año</span></div>
       <div class="city-stat"><span>900+</span><span>Iglesias</span></div>
     </div>
-    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-actions reveal reveal-delay-4">
+      <a href="#contacto" class="btn-city">Reservar experiencia →</a>
+      <button type="button" class="btn-city-video" data-play-video>Ver Video Cinematográfico <span>▶</span></button>
+    </div>
+    <div class="city-timeline reveal reveal-delay-4">
+      <div class="timeline-title">Itinerario Exclusivo</div>
+      <div class="timeline-items">
+        <div class="timeline-item active">
+          <div class="timeline-header">Día 1: Llegada VIP & Coliseo Privado <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Recepción privada en pista, traslado en limusina al hotel y acceso privado nocturno al Coliseo sin público.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 2: Catacumbas & Foro Romano <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Visita guiada por arqueólogos a secciones restringidas del Foro y descenso exclusivo a catacumbas privadas.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 3: Gastronomía de Trastévere <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Clase magistral con chef estrella Michelin y cena maridaje privada en una bodega subterránea histórica.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
     <div class="city-number">I</div>
   </div>
 </section>
@@ -882,7 +1224,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">02 · Costa<span class="city-time" data-timezone="Europe/Madrid"></span></div>
+    <div class="section-label reveal">02 · Costa<span class="city-time" data-timezone="Europe/Madrid"></span><span class="city-weather" data-city="barcelona"></span></div>
     <h2 class="reveal reveal-delay-1">Barcelona<span>Mediterráneo Salvaje</span></h2>
     <p class="desc reveal reveal-delay-2">Gaudí retorció la arquitectura como si la ciudad fuera un sueño líquido. El Mediterráneo golpea sus costas mientras las Ramblas vibran con el pulso de una cultura que fusiona lo gótico con lo vanguardista. Barcelona es un latido constante.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -890,7 +1232,36 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       <div class="city-stat"><span>8</span><span>Obras UNESCO</span></div>
       <div class="city-stat"><span>325+</span><span>Días de sol</span></div>
     </div>
-    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-actions reveal reveal-delay-4">
+      <a href="#contacto" class="btn-city">Reservar experiencia →</a>
+      <button type="button" class="btn-city-video" data-play-video>Ver Video Cinematográfico <span>▶</span></button>
+    </div>
+    <div class="city-timeline reveal reveal-delay-4">
+      <div class="timeline-title">Itinerario Exclusivo</div>
+      <div class="timeline-items">
+        <div class="timeline-item active">
+          <div class="timeline-header">Día 1: Gaudí Exclusivo <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Acceso VIP a la Sagrada Familia al amanecer y visita privada guiada por la Casa Batlló a puerta cerrada.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 2: Velero por la Costa Gótica <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Navegación de medio día en yate privado con catering gourmet y catas de cava frente al skyline de Barcelona.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 3: Tapas de Autor en El Born <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Tour gastronómico de alta gama privado por las tabernas ocultas del Born con sumiller privado.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
     <div class="city-number">II</div>
   </div>
 </section>
@@ -905,7 +1276,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">03 · Luz<span class="city-time" data-timezone="Europe/Paris"></span></div>
+    <div class="section-label reveal">03 · Luz<span class="city-time" data-timezone="Europe/Paris"></span><span class="city-weather" data-city="paris"></span></div>
     <h2 class="reveal reveal-delay-1">París<span>La Ciudad de la Luz</span></h2>
     <p class="desc reveal reveal-delay-2">Cada bulevar es una postal, cada café una película. París es elegancia brutal: la Torre Eiffel perfora el cielo, Notre Dame resiste el tiempo, y el Sena refleja siglos de arte, revolución y poesía. París no se explica: se siente.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -913,7 +1284,36 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       <div class="city-stat"><span>130+</span><span>Museos</span></div>
       <div class="city-stat"><span>33M</span><span>Turistas/año</span></div>
     </div>
-    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-actions reveal reveal-delay-4">
+      <a href="#contacto" class="btn-city">Reservar experiencia →</a>
+      <button type="button" class="btn-city-video" data-play-video>Ver Video Cinematográfico <span>▶</span></button>
+    </div>
+    <div class="city-timeline reveal reveal-delay-4">
+      <div class="timeline-title">Itinerario Exclusivo</div>
+      <div class="timeline-items">
+        <div class="timeline-item active">
+          <div class="timeline-header">Día 1: Atardecer en el Sena <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Crucero privado en un barco de caoba clásico con degustación de ostras y champán al encenderse las luces de la Torre Eiffel.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 2: Louvre a Puerta Cerrada <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Visita guiada privada exclusiva fuera de horario para contemplar la Gioconda y las obras maestras en total intimidad.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 3: Helicóptero sobre Versalles <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Vuelo privado en helicóptero sobre el Palacio de Versalles, seguido de almuerzo en una propiedad histórica de la zona.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
     <div class="city-number">III</div>
   </div>
 </section>
@@ -928,7 +1328,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">04 · Puente<span class="city-time" data-timezone="Europe/Istanbul"></span></div>
+    <div class="section-label reveal">04 · Puente<span class="city-time" data-timezone="Europe/Istanbul"></span><span class="city-weather" data-city="istanbul"></span></div>
     <h2 class="reveal reveal-delay-1">Estambul<span>Donde Oriente Abraza Occidente</span></h2>
     <p class="desc reveal reveal-delay-2">Santa Sofía desafía la gravedad y el tiempo. El Bósforo separa dos continentes mientras los minaretes compiten con los rascacielos. Estambul es caos sagrado, es especias en el Gran Bazar, es el alma de dos mundos en uno.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -936,7 +1336,36 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       <div class="city-stat"><span>2</span><span>Continentes</span></div>
       <div class="city-stat"><span>3,000+</span><span>Mezquitas</span></div>
     </div>
-    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-actions reveal reveal-delay-4">
+      <a href="#contacto" class="btn-city">Reservar experiencia →</a>
+      <button type="button" class="btn-city-video" data-play-video>Ver Video Cinematográfico <span>▶</span></button>
+    </div>
+    <div class="city-timeline reveal reveal-delay-4">
+      <div class="timeline-title">Itinerario Exclusivo</div>
+      <div class="timeline-items">
+        <div class="timeline-item active">
+          <div class="timeline-header">Día 1: Bósforo en Yate Privado <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Crucero privado al atardecer por el estrecho del Bósforo con caviar, champán y música tradicional en vivo.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 2: Secretos del Gran Bazar <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Tour exclusivo guiado por expertos a los pasadizos ocultos del Gran Bazar, talleres de artesanos centenarios y compras privadas.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 3: Baño Turco VIP & Cena Imperial <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Ritual de baño turco completo en un hammam histórico reservado en exclusiva, seguido de una cena imperial en la Torre de Leandro.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
     <div class="city-number">IV</div>
   </div>
 </section>
@@ -951,7 +1380,7 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <div class="gallery-dots"></div>
   </div>
   <div class="city-content">
-    <div class="section-label reveal">05 · Corona<span class="city-time" data-timezone="Europe/Madrid"></span></div>
+    <div class="section-label reveal">05 · Corona<span class="city-time" data-timezone="Europe/Madrid"></span><span class="city-weather" data-city="madrid"></span></div>
     <h2 class="reveal reveal-delay-1">Madrid<span>El Corazón de España</span></h2>
     <p class="desc reveal reveal-delay-2">El Museo del Prado guarda las almas de Goya y Velázquez. La Puerta del Sol late con el kilómetro cero de todas las rutas. Madrid es de noche interminable, de tapas y de una energía que nunca duerme. La capital que abraza a todos.</p>
     <div class="city-stats reveal reveal-delay-3">
@@ -959,7 +1388,36 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
       <div class="city-stat"><span>40+</span><span>Museos</span></div>
       <div class="city-stat"><span>280+</span><span>Días de sol</span></div>
     </div>
-    <a href="#contacto" class="btn-city reveal reveal-delay-4">Reservar experiencia →</a>
+    <div class="city-actions reveal reveal-delay-4">
+      <a href="#contacto" class="btn-city">Reservar experiencia →</a>
+      <button type="button" class="btn-city-video" data-play-video>Ver Video Cinematográfico <span>▶</span></button>
+    </div>
+    <div class="city-timeline reveal reveal-delay-4">
+      <div class="timeline-title">Itinerario Exclusivo</div>
+      <div class="timeline-items">
+        <div class="timeline-item active">
+          <div class="timeline-header">Día 1: Prado Privado & Palacio Real <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Recorrido privado a puerta cerrada por el Museo del Prado guiado por un historiador de arte de renombre, y visita privada al Palacio Real.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 2: De Tapas por La Latina <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Ruta exclusiva de tapas de autor diseñadas por chefs locales en tabernas centenarias con maridaje de vinos de reserva españoles.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-header">Día 3: Flamenco Histórico & Sierra <span class="timeline-toggle">+</span></div>
+          <div class="timeline-body">
+            <p class="timeline-desc">Espectáculo privado de flamenco de primer nivel en un tablao histórico reservado, y traslado en helicóptero a la Sierra de Madrid al atardecer.</p>
+          </div>
+          <div class="timeline-dot"></div>
+        </div>
+      </div>
+    </div>
     <div class="city-number">V</div>
   </div>
 </section>
@@ -1062,6 +1520,13 @@ footer{flex-direction:column;gap:1rem;text-align:center;padding:1.5rem}
     <a href="#">TikTok</a>
   </div>
 </footer>
+
+<div class="video-lightbox" id="videoLightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Video cinematográfico del destino">
+  <div class="lightbox-container">
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar video">×</button>
+    <iframe class="lightbox-video" id="lightboxVideo" title="Video cinematográfico del destino" frameborder="0" allow="autoplay; fullscreen; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
 
 <script>
 // GALLERY DATA
@@ -1565,7 +2030,244 @@ function initHeroVideo(){
   }
 }
 
+// SMOOTH SCROLL CLASS
+class SmoothScroll {
+  constructor() {
+    this.target = window.scrollY;
+    this.current = window.scrollY;
+    this.ease = 0.075;
+    this.active = false;
+    this.running = false;
+    
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                     window.matchMedia('(max-width: 960px)').matches || 
+                     (window.matchMedia('(hover: none)').matches);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!isMobile && !reduceMotion) {
+      this.init();
+    }
+  }
+  
+  init() {
+    this.active = true;
+    window.addEventListener('wheel', e => this.onWheel(e), { passive: false });
+    window.addEventListener('scroll', () => {
+      if (!this.running) {
+        this.target = window.scrollY;
+        this.current = window.scrollY;
+      }
+    }, { passive: true });
+  }
+  
+  onWheel(e) {
+    e.preventDefault();
+    const delta = e.deltaY;
+    this.target = Math.max(0, Math.min(this.target + delta, document.documentElement.scrollHeight - window.innerHeight));
+    if (!this.running) {
+      this.running = true;
+      this.update();
+    }
+  }
+  
+  update() {
+    if (!this.active) return;
+    const diff = this.target - this.current;
+    this.current += diff * this.ease;
+    
+    if (Math.abs(diff) > 0.5) {
+      window.scrollTo(0, this.current);
+      requestAnimationFrame(() => this.update());
+    } else {
+      window.scrollTo(0, this.target);
+      this.current = this.target;
+      this.running = false;
+    }
+  }
+}
+
+// MAGNETIC BUTTONS
+function initMagneticButtons() {
+  const isMobile = window.matchMedia('(max-width: 960px)').matches || ('ontouchstart' in window);
+  if (isMobile) return;
+  
+  const magneticElements = document.querySelectorAll('.btn-primary, .btn-outline, .btn-city, .btn-city-video');
+  
+  magneticElements.forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      el.style.transform = `translate3d(${x * 0.25}px, ${y * 0.25}px, 0) translateY(-2px)`;
+    });
+    
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'translate3d(0, 0, 0)';
+    });
+  });
+}
+
+// MAP PARALLAX
+function initMapParallax() {
+  const mapContainer = document.querySelector('.map-container');
+  const mapSvg = document.querySelector('.europe-map');
+  if (!mapContainer || !mapSvg || window.matchMedia('(max-width: 960px)').matches) return;
+  
+  mapContainer.addEventListener('mousemove', e => {
+    const rect = mapContainer.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    
+    mapSvg.style.transform = `translate3d(${x * 12}px, ${y * 12}px, 0)`;
+  });
+  
+  mapContainer.addEventListener('mouseleave', () => {
+    mapSvg.style.transform = 'translate3d(0, 0, 0)';
+  });
+}
+
+// KM COUNTER
+function initKmCounter() {
+  const counterEl = document.getElementById('kmCounter');
+  const section = document.getElementById('ruta');
+  if (!counterEl || !section) return;
+  
+  let triggered = false;
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !triggered) {
+        triggered = true;
+        animateCounter(counterEl, 0, 4850, 2000);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  obs.observe(section);
+  
+  function animateCounter(el, start, end, duration) {
+    const startTime = performance.now();
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      el.textContent = end.toLocaleString('es-ES');
+      return;
+    }
+    
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3); // cubic ease out
+      const currentVal = Math.round(start + (end - start) * ease);
+      el.textContent = currentVal.toLocaleString('es-ES');
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+    requestAnimationFrame(update);
+  }
+}
+
+// TIMELINES
+function initTimelines() {
+  document.querySelectorAll('.timeline-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.closest('.timeline-item');
+      const parent = item.closest('.timeline-items');
+      
+      parent.querySelectorAll('.timeline-item').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('active');
+        }
+      });
+      
+      item.classList.toggle('active');
+    });
+  });
+}
+
+// VIDEO LIGHTBOX
+const videoUrls = {
+  roma: 'https://player.vimeo.com/video/287313010?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  barcelona: 'https://player.vimeo.com/video/170669225?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  paris: 'https://player.vimeo.com/video/108018156?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  istanbul: 'https://player.vimeo.com/video/140224213?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  madrid: 'https://player.vimeo.com/video/167232238?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1'
+};
+
+function initVideoLightbox() {
+  const lightbox = document.getElementById('videoLightbox');
+  const iframe = document.getElementById('lightboxVideo');
+  const closeBtn = document.getElementById('lightboxClose');
+  
+  if (!lightbox || !iframe || !closeBtn) return;
+  
+  document.querySelectorAll('[data-play-video]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const cityEl = btn.closest('.city');
+      if (!cityEl) return;
+      const cityId = cityEl.id;
+      const url = videoUrls[cityId];
+      
+      if (url) {
+        iframe.src = url;
+        lightbox.classList.add('active');
+        lightbox.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+        
+        const ring = document.getElementById('cursorRing');
+        if (ring) ring.classList.add('hover');
+      }
+    });
+  });
+  
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    iframe.src = '';
+    document.body.style.overflow = '';
+    const ring = document.getElementById('cursorRing');
+    if (ring) ring.classList.remove('hover');
+  }
+  
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+  
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
+}
+
+// WEATHER WIDGET
+function initWeather() {
+  const weatherData = {
+    roma: { temp: '28°C', icon: `<svg class="weather-icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>` },
+    barcelona: { temp: '26°C', icon: `<svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M12 2v2M4.93 4.93l1.41 1.41M20 10h2M17.66 17.66l1.41 1.41M2 10h2M1.93 18.07a8 8 0 0 1 12.38-10.42 5 5 0 0 1 7.21 4.54c0 2.22-1.4 4.1-3.34 4.81"></path></svg>` },
+    paris: { temp: '22°C', icon: `<svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M17.5 19a3.5 3.5 0 1 1-5.83-2.67 4 4 0 1 1-6.84-2.66c0-2.22 1.4-4.1 3.34-4.81A5 5 0 0 1 17.5 10c2.2 0 4 1.8 4 4s-1.8 4-4 4z"></path></svg>` },
+    istanbul: { temp: '25°C', icon: `<svg class="weather-icon-svg" viewBox="0 0 24 24"><path d="M17.7 7.7A7.5 7.5 0 1 1 7.7 17.7M9.5 2h2M18.5 2h2M11.5 22h2M2 9.5h2M2 18.5h2M20 9.5h2M20 18.5h2"></path></svg>` },
+    madrid: { temp: '30°C', icon: `<svg class="weather-icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>` }
+  };
+  
+  document.querySelectorAll('.city-weather').forEach(el => {
+    const city = el.dataset.city;
+    const data = weatherData[city];
+    if (data) {
+      el.innerHTML = ` · <span class="weather-temp">${data.temp}</span> ${data.icon}`;
+    }
+  });
+}
+
 // BOOT
+new SmoothScroll()
 initGalleries()
 initClocks()
 initParallax()
@@ -1573,6 +2275,13 @@ initInteractiveMap()
 initCalculator()
 initContactForm()
 initHeroVideo()
+initMagneticButtons()
+initMapParallax()
+initKmCounter()
+initTimelines()
+initVideoLightbox()
+initWeather()
 </script>
+
 </body>
 </html>
