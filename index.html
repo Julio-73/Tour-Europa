@@ -10,6 +10,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://player.vimeo.com">
+<link rel="preconnect" href="https://i.vimeocdn.com">
+<link rel="preconnect" href="https://f.vimeocdn.com">
+<link rel="preconnect" href="https://cdn.pixabay.com">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230c0c0e'/%3E%3Cpath d='M32 10 53 54h-9l-4-9H24l-4 9h-9L32 10Zm0 18-5 11h10l-5-11Z' fill='%23c62828'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
 <!-- Preload cover images for super-fast loading -->
@@ -992,7 +995,7 @@ html {
 <section class="hero">
   <div class="hero-bg"></div>
   <video autoplay muted loop playsinline class="hero-video">
-    <source src="https://player.vimeo.com/external/409240417.sd.mp4?s=df8c2b74fe40954be495f57dd28eb61b4db1b1c2&profile_id=165&oauth2_token_id=57447761" type="video/mp4">
+    <source src="https://cdn.pixabay.com/video/2023/10/02/183271-870457542_large.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
   <div class="hero-spotlight" id="heroSpotlight"></div>
@@ -2189,11 +2192,11 @@ function initTimelines() {
 
 // VIDEO LIGHTBOX
 const videoUrls = {
-  roma: 'https://player.vimeo.com/video/287313010?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
-  barcelona: 'https://player.vimeo.com/video/170669225?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
-  paris: 'https://player.vimeo.com/video/108018156?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
-  istanbul: 'https://player.vimeo.com/video/140224213?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
-  madrid: 'https://player.vimeo.com/video/167232238?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1'
+  roma: 'https://player.vimeo.com/video/471335222?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  barcelona: 'https://player.vimeo.com/video/396032310?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  paris: 'https://player.vimeo.com/video/795815704?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  istanbul: 'https://player.vimeo.com/video/129740426?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1',
+  madrid: 'https://player.vimeo.com/video/85609069?autoplay=1&loop=1&muted=0&quality=4K&byline=0&title=0&portrait=0&dnt=1'
 };
 
 function initVideoLightbox() {
@@ -2202,6 +2205,9 @@ function initVideoLightbox() {
   const closeBtn = document.getElementById('lightboxClose');
   
   if (!lightbox || !iframe || !closeBtn) return;
+  
+  // Preload Vimeo player on page load — carga instantánea al abrir
+  iframe.src = videoUrls.roma;
   
   document.querySelectorAll('[data-play-video]').forEach(btn => {
     btn.addEventListener('click', e => {
@@ -2227,7 +2233,6 @@ function initVideoLightbox() {
   function closeLightbox() {
     lightbox.classList.remove('active');
     lightbox.setAttribute('aria-hidden', 'true');
-    iframe.src = '';
     document.body.style.overflow = '';
     const ring = document.getElementById('cursorRing');
     if (ring) ring.classList.remove('hover');
