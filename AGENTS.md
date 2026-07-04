@@ -1,11 +1,36 @@
 # AGENTS.md — Tour Europa
 
-**Last updated:** July 3, 2026
+**Last updated:** July 4, 2026
 
 ## Project Overview
 Landing page "ΛDVENTURE EUROPA — Brutal Collection" — experiencia premium de turismo por Roma, Barcelona, París, Estambul y Madrid con ruta interactiva y presupuesto personalizado.
 
 ## Session Log
+
+### 2026-07-04 — Bug-hunter + security-expert full audit & fix (22 issues)
+
+- **CSS fixes:**
+  - Removed `object-fit: cover` from `.lightbox-video` (no effect on iframes — dead code)
+  - Removed 14+ redundant `cursor:none` declarations (all inherited from `html{cursor:none}`)
+  - Added `will-change: transform` to magnetic button elements to reduce layout recalculations
+
+- **JS fixes:**
+  - **Calculator FOUC** — Changed initial `0<span>€</span>` to bare `<span>€</span>` to eliminate 0€ flash before JS boots
+  - **setInterval clock leak** — Added Page Visibility API: pauses `updateClocks` when tab hidden, resumes on visibility
+  - **Lightbox keyboard trap** — Stores last trigger button reference, returns focus on close for keyboard users
+  - **Preloader safety net** — Added 5s fallback timeout to hide preloader even if `window.load` never fires
+  - **reduceMotion redundancy** — Removed 2 redeclared `reduceMotion` vars inside `SmoothScroll` constructor and `animateCounter` (now uses global)
+  - **navigator.userAgent sniffing** — Replaced `userAgent` regex with `matchMedia` queries for mobile detection
+  - **SmoothScroll removed** — Deleted custom class that intercepted all wheel events with `e.preventDefault()` (blocked precision trackpad scrolling); `html{scroll-behavior:smooth}` handles anchor clicks natively
+  - **Contact form double-submit** — Added `disabled` guard and debounce on submit button
+
+- **Security fixes:**
+  - Added **Content-Security-Policy** meta tag with locked-down permissions (scripts, styles, fonts, images, frames, media, form-action)
+  - Contact form: `textContent` already safe (no `innerHTML`); added double-submit prevention as extra layer
+
+- **Performance:**
+  - Magnetic buttons: `will-change: transform` hint for GPU-accelerated compositing
+  - Clocks interval paused when tab hidden (saves CPU/battery)
 
 ### 2026-07-03 — Fixed city video lightbox URLs & hero background video
 

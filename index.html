@@ -6,6 +6,7 @@
 <title>ΛDVENTURE EUROPA — Brutal Collection</title>
 <meta name="description" content="Experiencias premium de turismo por Roma, Barcelona, París, Estambul y Madrid con ruta interactiva y presupuesto personalizado.">
 <meta name="theme-color" content="#0c0c0e">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; frame-src https://player.vimeo.com; media-src https://cdn.pixabay.com; connect-src 'self'; form-action 'self';">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
@@ -24,7 +25,7 @@
 <style>
 :root{--bg:#0c0c0e;--bg2:#121214;--surface:#18181b;--border:#222226;--muted:#8a8a96;--accent:#c62828;--accent2:#8b1a1a;--text:#f2f2f6;--text2:#b7b7c2;--font-sans:'Inter',system-ui,-apple-system,sans-serif;--font-serif:'Playfair Display',Georgia,serif;--ease:cubic-bezier(.22,1,.36,1)}
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;cursor:none}
+html{scroll-behavior:smooth;}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 ::selection{background:var(--accent);color:#fff}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
@@ -57,7 +58,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .nav-links a:hover::after{width:100%}
 .nav-links a[aria-current="true"]{color:var(--text)}
 .nav-links a[aria-current="true"]::after{width:100%}
-.nav-toggle{display:none;flex-direction:column;gap:5px;cursor:none;padding:5px;z-index:10001;background:transparent;border:0;color:inherit}
+.nav-toggle{display:none;flex-direction:column;gap:5px;padding:5px;z-index:10001;background:transparent;border:0;color:inherit}
 .nav-toggle span{width:28px;height:1.5px;background:#fff;transition:all .35s;border-radius:2px}
 .nav-toggle.active span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .nav-toggle.active span:nth-child(2){opacity:0}
@@ -80,10 +81,10 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .hero h1 .line2{background:linear-gradient(135deg,var(--accent) 20%,#e57373 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero p{font-size:clamp(.9rem,1.2vw,1.1rem);color:var(--text2);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;font-weight:300}
 .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.btn-primary{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border:none;cursor:none;overflow:hidden}
+.btn-primary{position:relative;display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;background:var(--accent);color:#fff;text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border:none;overflow:hidden}
 .btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.12) 100%);pointer-events:none}
 .btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 24px 48px rgba(198,40,40,.25)}
-.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;border:1.5px solid rgba(255,255,255,.12);color:var(--text);text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none;background:rgba(255,255,255,.03);backdrop-filter:blur(4px)}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:1.15rem 3rem;border:1.5px solid rgba(255,255,255,.12);color:var(--text);text-decoration:none;font-weight:700;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);background:rgba(255,255,255,.03);backdrop-filter:blur(4px)}
 .btn-outline:hover{border-color:var(--accent);background:rgba(198,40,40,.08);box-shadow:0 0 40px rgba(198,40,40,.08)}
 .scroll-indicator{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:.6rem;color:var(--muted);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase}
 .scroll-line{width:1px;height:50px;background:linear-gradient(180deg,var(--muted),transparent);animation:scrollPulse 2.4s ease infinite}
@@ -104,7 +105,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .city-image .img-overlay{position:absolute;inset:0;background:linear-gradient(90deg,var(--bg2) 0%,transparent 30%,transparent 70%,var(--bg2) 100%);pointer-events:none;opacity:.4;z-index:2}
 
 /* GALLERY ARROWS */
-.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(12,12,14,.7);border:1px solid rgba(255,255,255,.08);color:#fff;width:44px;height:44px;font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;transition:all .4s cubic-bezier(.25,.46,.45,.94);backdrop-filter:blur(8px);font-family:var(--font-sans);line-height:1;padding-bottom:3px}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;background:rgba(12,12,14,.7);border:1px solid rgba(255,255,255,.08);color:#fff;width:44px;height:44px;font-size:1.6rem;display:flex;align-items:center;justify-content:center;opacity:0;transition:all .4s cubic-bezier(.25,.46,.45,.94);backdrop-filter:blur(8px);font-family:var(--font-sans);line-height:1;padding-bottom:3px}
 .city-image:hover .gallery-arrow{opacity:1}
 .gallery-arrow:hover{background:var(--accent);border-color:var(--accent)}
 .gallery-prev{left:1rem}
@@ -113,7 +114,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 /* GALLERY DOTS */
 .gallery-dots{position:absolute;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:.5rem;opacity:0;transition:opacity .4s}
 .city-image:hover .gallery-dots{opacity:1}
-.gallery-dots .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:transparent;transition:all .35s cubic-bezier(.25,.46,.45,.94);cursor:none;padding:0;appearance:none}
+.gallery-dots .dot{width:8px;height:8px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);background:transparent;transition:all .35s cubic-bezier(.25,.46,.45,.94);padding:0;appearance:none}
 .gallery-dots .dot.active{background:#fff;border-color:#fff;box-shadow:0 0 12px rgba(255,255,255,.3)}
 .gallery-dots .dot:hover{background:var(--accent);border-color:var(--accent)}
 
@@ -126,7 +127,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .city-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
 .city-stat span:first-child{font-size:1.8rem;font-weight:900;color:var(--text);display:block;line-height:1;letter-spacing:-.03em}
 .city-stat span:last-child{font-size:.65rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:.35rem;display:block}
-.btn-city{display:inline-flex;align-items:center;gap:.6rem;color:var(--text);text-decoration:none;font-weight:600;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border-bottom:2px solid var(--accent);padding-bottom:.35rem;cursor:none}
+.btn-city{display:inline-flex;align-items:center;gap:.6rem;color:var(--text);text-decoration:none;font-weight:600;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;transition:all .35s cubic-bezier(.25,.46,.45,.94);border-bottom:2px solid var(--accent);padding-bottom:.35rem;}
 .btn-city:hover{gap:1.2rem;color:var(--accent);border-bottom-color:var(--accent2)}
 .city-time{margin-left:auto;font-family:monospace;letter-spacing:0.1em;color:var(--muted);font-size:0.65rem;font-weight:400}
 .city-coordinates{position:absolute;top:1.5rem;left:1.5rem;z-index:3;font-size:0.62rem;letter-spacing:0.22em;color:rgba(255,255,255,0.5);font-family:monospace;background:rgba(12,12,14,0.55);padding:0.4rem 0.8rem;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.06);pointer-events:none}
@@ -583,11 +584,11 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 .contact h2{font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;letter-spacing:-.04em;text-transform:uppercase;margin-bottom:.6rem;line-height:1}
 .contact .sub{color:var(--text2);margin-bottom:3rem;font-size:.92rem;font-weight:300}
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-.contact input,.contact textarea{width:100%;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:.88rem;transition:all .35s;outline:none;border-radius:0;cursor:none}
+.contact input,.contact textarea{width:100%;padding:1.1rem 1.3rem;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:.88rem;transition:all .35s;outline:none;border-radius:0;}
 .contact input::placeholder,.contact textarea::placeholder{color:var(--muted);font-weight:300}
 .contact input:focus,.contact textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(198,40,40,.08);background:var(--bg2)}
 .contact textarea{grid-column:1/-1;resize:vertical;min-height:130px}
-.contact button{width:100%;padding:1.2rem;background:var(--accent);color:#fff;border:none;font-size:.82rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .35s;position:relative;overflow:hidden}
+.contact button{width:100%;padding:1.2rem;background:var(--accent);color:#fff;border:none;font-size:.82rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;transition:all .35s;position:relative;overflow:hidden}
 .contact button::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.1) 100%)}
 .contact button:hover{background:var(--accent2);box-shadow:0 16px 32px rgba(198,40,40,.2)}
 .form-status{min-height:1.4rem;margin-top:1rem;color:var(--text2);font-size:.85rem;line-height:1.5}
@@ -596,7 +597,7 @@ nav.scrolled{background:rgba(12,12,14,.94);backdrop-filter:blur(24px) saturate(1
 /* FOOTER */
 footer{background:var(--bg);border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);font-weight:300}
 footer .socials{display:flex;gap:1.5rem}
-footer .socials a{color:var(--muted);text-decoration:none;transition:color .35s;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;cursor:none}
+footer .socials a{color:var(--muted);text-decoration:none;transition:color .35s;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;}
 footer .socials a:hover{color:var(--accent)}
 
 /* REVEAL */
@@ -674,6 +675,7 @@ html {
 
 /* Magnetic Buttons transitions */
 .btn-primary, .btn-outline, .btn-city, .btn-city-video {
+  will-change: transform;
   transition: transform 0.2s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
 
@@ -808,7 +810,6 @@ html {
 .lightbox-video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
 }
 .lightbox-close {
@@ -1482,7 +1483,7 @@ html {
         
         <div class="calc-price-wrap">
           <div class="calc-price-label">Presupuesto Estimado</div>
-          <div class="calc-price" id="calcPriceDisplay">0<span>€</span></div>
+          <div class="calc-price" id="calcPriceDisplay"><span>€</span></div>
         </div>
         
         <div class="calc-perks-title">Beneficios Incluidos</div>
@@ -1617,9 +1618,12 @@ function initGalleries(){
 }
 
 // PRELOADER
-window.addEventListener('load',()=>{
-  setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),1200)
-})
+function hidePreloader(){
+  const p = document.getElementById('preloader');
+  if(p) p.classList.add('hidden');
+}
+window.addEventListener('load',()=>setTimeout(hidePreloader,1200));
+setTimeout(hidePreloader,5000); // safety net: hide after 5s even if load fails
 
 // NAV SCROLL
 const nav=document.getElementById('navbar')
@@ -1706,6 +1710,7 @@ if(spotlight && finePointer && !reduceMotion){
 // CLOCKS
 function initClocks(){
   const clockElms = document.querySelectorAll('.city-time');
+  let intervalId;
   function updateClocks(){
     const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
     clockElms.forEach(el => {
@@ -1720,7 +1725,15 @@ function initClocks(){
     });
   }
   updateClocks();
-  setInterval(updateClocks, 1000);
+  intervalId = setInterval(updateClocks, 1000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      clearInterval(intervalId);
+    } else {
+      updateClocks();
+      intervalId = setInterval(updateClocks, 1000);
+    }
+  });
 }
 
 // PARALLAX
@@ -1988,6 +2001,8 @@ function initContactForm(){
   if(!form)return;
   form.addEventListener('submit',e=>{
     e.preventDefault();
+    const btn=form.querySelector('button[type="submit"]');
+    if(btn.disabled)return; // prevent double submit
     if(!form.checkValidity()){
       form.reportValidity();
       return;
@@ -1996,7 +2011,10 @@ function initContactForm(){
       status.textContent='Solicitud preparada. Te contactaremos para cerrar los detalles de la aventura.';
       status.classList.add('success');
     }
-    form.querySelector('button[type="submit"]')?.blur();
+    btn.disabled=true;
+    btn.textContent='Enviando...';
+    setTimeout(()=>{btn.disabled=false;btn.textContent='Enviar solicitud'},3000);
+    btn?.blur();
   });
 }
 
@@ -2033,61 +2051,8 @@ function initHeroVideo(){
   }
 }
 
-// SMOOTH SCROLL CLASS
-class SmoothScroll {
-  constructor() {
-    this.target = window.scrollY;
-    this.current = window.scrollY;
-    this.ease = 0.075;
-    this.active = false;
-    this.running = false;
-    
-    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                     window.matchMedia('(max-width: 960px)').matches || 
-                     (window.matchMedia('(hover: none)').matches);
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    if (!isMobile && !reduceMotion) {
-      this.init();
-    }
-  }
-  
-  init() {
-    this.active = true;
-    window.addEventListener('wheel', e => this.onWheel(e), { passive: false });
-    window.addEventListener('scroll', () => {
-      if (!this.running) {
-        this.target = window.scrollY;
-        this.current = window.scrollY;
-      }
-    }, { passive: true });
-  }
-  
-  onWheel(e) {
-    e.preventDefault();
-    const delta = e.deltaY;
-    this.target = Math.max(0, Math.min(this.target + delta, document.documentElement.scrollHeight - window.innerHeight));
-    if (!this.running) {
-      this.running = true;
-      this.update();
-    }
-  }
-  
-  update() {
-    if (!this.active) return;
-    const diff = this.target - this.current;
-    this.current += diff * this.ease;
-    
-    if (Math.abs(diff) > 0.5) {
-      window.scrollTo(0, this.current);
-      requestAnimationFrame(() => this.update());
-    } else {
-      window.scrollTo(0, this.target);
-      this.current = this.target;
-      this.running = false;
-    }
-  }
-}
+// SMOOTH SCROLL — native scroll via CSS (html{scroll-behavior:smooth}) handles anchor clicks
+// No custom wheel interception needed; precision trackpads are not blocked.
 
 // MAGNETIC BUTTONS
 function initMagneticButtons() {
@@ -2151,7 +2116,6 @@ function initKmCounter() {
   
   function animateCounter(el, start, end, duration) {
     const startTime = performance.now();
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceMotion) {
       el.textContent = end.toLocaleString('es-ES');
       return;
@@ -2203,6 +2167,7 @@ function initVideoLightbox() {
   const lightbox = document.getElementById('videoLightbox');
   const iframe = document.getElementById('lightboxVideo');
   const closeBtn = document.getElementById('lightboxClose');
+  let lastTrigger = null;
   
   if (!lightbox || !iframe || !closeBtn) return;
   
@@ -2212,6 +2177,7 @@ function initVideoLightbox() {
   document.querySelectorAll('[data-play-video]').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
+      lastTrigger = btn;
       const cityEl = btn.closest('.city');
       if (!cityEl) return;
       const cityId = cityEl.id;
@@ -2236,6 +2202,7 @@ function initVideoLightbox() {
     document.body.style.overflow = '';
     const ring = document.getElementById('cursorRing');
     if (ring) ring.classList.remove('hover');
+    if (lastTrigger && lastTrigger.focus) lastTrigger.focus();
   }
   
   closeBtn.addEventListener('click', closeLightbox);
@@ -2272,7 +2239,6 @@ function initWeather() {
 }
 
 // BOOT
-new SmoothScroll()
 initGalleries()
 initClocks()
 initParallax()
